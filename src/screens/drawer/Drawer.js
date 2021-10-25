@@ -1,14 +1,15 @@
-import React from 'react';
-import { View, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native';
+import React, {useEffect} from 'react';
+import { View, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { Avatar, Text, Drawer, Switch } from 'react-native-paper';
+import { Avatar, Drawer } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { change } from '../../actions/themeActions';
+import * as loggedActions from '../../actions/loggedActions'
 import CustomText from '../../components/text';
+import { useNavigation } from '@react-navigation/core';
 
 export default function DrawerContent(props) {
-  const dark = useSelector(state => state.theme)
+  const navigation = useNavigation()
   const dispatch = useDispatch()
 
   return (
@@ -29,7 +30,19 @@ export default function DrawerContent(props) {
 
         <Drawer.Section>
           <DrawerItem
-            label="Trang chủ"/>
+            label="Trang chủ"
+            onPress={() => navigation.reset({
+              index: 0,
+              routes: [{ name: 'Market' }],
+            })}            
+          />
+        </Drawer.Section>
+
+        <Drawer.Section>
+          <DrawerItem
+            label="Log out"
+            onPress={() => dispatch(loggedActions.signOut())}            
+          />
         </Drawer.Section>
       </DrawerContentScrollView>
     </View>
@@ -46,4 +59,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 80,
   },
+  View: {
+    alignItems: 'center',
+    paddingLeft: 20,
+    flexDirection: 'row',
+    height: 80,
+  }
 });

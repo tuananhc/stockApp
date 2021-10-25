@@ -1,24 +1,32 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, FlatList } from 'react-native';
 
 import CustomText from '../../components/text';
 
 export default function MainScreen() {
   const navigation = useNavigation();
   const axios = require('axios').default
-  const [text, setText] = useState("")
+  const [text, setText] = useState([])
   
   function getPrice() {
     axios.get('https://finnhub.io/api/v1/stock/candle?symbol=AAPL&resolution=D&from=1633038335&to=1633124735&token=c5nup6iad3icte5l57r0')
     .then(function(response) {
-      console.log('success')
-      setText(response.data.c)
+      setText(response.data)
+      console.log(text)
     })
     .catch(function (error) {
       setText(error[0])
     })
   }
+
+  function renderItem({item}) {
+    return (
+      <Text>{item.key}</Text>
+    )
+  }
+
+  
 
   return (
     <>
@@ -29,7 +37,7 @@ export default function MainScreen() {
       }}>
         <Text onPress={() => {navigation.navigate('Login')}}>The main screen</Text>
       <TouchableOpacity
-        onPress={() => navigation.toggleDrawer()}
+        onPress={() => getPrice()}
       >
         <View style={{
           width: 75,
@@ -44,7 +52,13 @@ export default function MainScreen() {
         </View>
       </TouchableOpacity>
       <CustomText>this is my text</CustomText>
-      <Text>{text}</Text>
+      <View>
+        {Object.keys(text).forEach((key) => {
+          return (
+            <Text>{key}</Text>
+          )
+        })}
+      </View>
       </View>  
     </>
   )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { View, Image, TouchableOpacity, TouchableHighlight, Text } from 'react-native';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -11,12 +11,15 @@ import MainScreen from '../screens/mainScreen/MainScreen';
 import ProfileScreen from '../screens/profileScreen/ProfileScreen';
 import DrawerContent from '../screens/drawer/Drawer';
 import { change } from '../actions/themeActions';
+import MarketScreen from '../screens/marketScreen/MarketScreen';
+import NewsScreen from '../screens/newsScreen/NewsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function Navigations() {
+  var isLoggedIn = useSelector(state => state.isLoggedIn)
   const dark = useSelector(state => state.theme)
   const dispatch = useDispatch()
   
@@ -24,7 +27,9 @@ export default function Navigations() {
     return (
       <Tab.Navigator>
         <Tab.Screen name="Home" component={home} options={{headerShown: false}}/>
-        <Tab.Screen name="Profile" options={{ title: "Account profile" }} component={ProfileScreen}/>
+        <Tab.Screen name="Market" component={MarketScreen} options={{headerShown: true}}/>
+        <Tab.Screen name="News" component={NewsScreen} options={{headerShown: true, }}/>
+        <Tab.Screen name="Profile" options={{ title: "Profile", headerTitle: "Account profile" }} component={ProfileScreen}/>
       </Tab.Navigator>
     )
   }
@@ -57,15 +62,13 @@ export default function Navigations() {
     return (
       <Drawer.Navigator 
         drawerContent={(props) => <DrawerContent {...props} />}
-        screenOptions={{headerTitleAlign: 'left'}}
-        
       >
         <Drawer.Screen 
             name="Main" 
             component={ MainScreen }
             options={{
               headerRight: () => themeButton(), 
-              drawerType: 'front'
+              drawerType: 'front',
             }}
         />
       </Drawer.Navigator>
@@ -74,15 +77,32 @@ export default function Navigations() {
 
   return (
     <NavigationContainer theme={dark ? DarkTheme : DefaultTheme}>
-    <Stack.Navigator 
-        initialRouteName="Login" 
-        screenOptions={{
-        headerShown: false
-        }}
-    >
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Main" component={main} />
-    </Stack.Navigator>
+      {isLoggedIn ? (
+        <Stack.Navigator
+          initialRouteName="Main" 
+          screenOptions={{
+            headerShown: false,
+            headerLeft: () => null
+          }}
+        >
+          <Stack.Screen name="Main" component={main} />
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator 
+          initialRouteName="Login" 
+          screenOptions={{
+            headerShown: false,
+            gestureEnabled: false
+          }}
+        >
+          <Stack.Screen 
+            name="Login" 
+            component={LoginScreen} 
+            options={{animationTypeForReplace: isLoggedIn ? 'push' : 'pop'}}
+          />
+        </Stack.Navigator>
+        
+      )}
     </NavigationContainer>
   )
 }
