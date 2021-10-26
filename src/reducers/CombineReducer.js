@@ -5,7 +5,7 @@ import loggedReducer from './LoggedReducer';
 
 const combinedReducers = combineReducers({
     theme: themeReducer,
-    isLoggedIn: loggedReducer
+    loggedReducer
 })
 
 export default combinedReducers

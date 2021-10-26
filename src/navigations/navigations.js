@@ -1,60 +1,104 @@
 import React from 'react'
-import { View, Image, TouchableOpacity, TouchableHighlight, Text } from 'react-native';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native'
+import { View, TouchableOpacity } from 'react-native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createDrawerNavigator } from '@react-navigation/drawer'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useSelector, useDispatch } from 'react-redux'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import LoginScreen from '../screens/loginScreen/LoginScreen';
 import MainScreen from '../screens/mainScreen/MainScreen';
 import ProfileScreen from '../screens/profileScreen/ProfileScreen';
 import DrawerContent from '../screens/drawer/Drawer';
-import { change } from '../actions/themeActions';
 import MarketScreen from '../screens/marketScreen/MarketScreen';
 import NewsScreen from '../screens/newsScreen/NewsScreen';
+import WatchList from '../screens/WatchList';
+import { change } from '../actions/themeActions';
+import searchButton from '../components/searchButton';
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+const TopTab = createMaterialTopTabNavigator();
+const BottomTab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
+const MyTheme = {
+  dark: true,
+  colors: {
+    primary: 'black',
+    background: '#222831',
+    card: '#082032',
+    text: 'rgb(255, 255, 255)',
+    border: 'rgb(199, 199, 204)',
+    notification: 'rgb(199, 199, 204)',
+  },
+};
+
 export default function Navigations() {
-  var isLoggedIn = useSelector(state => state.isLoggedIn)
+  var isLoggedIn = useSelector(state => state.loggedReducer.isLoggedIn)
   const dark = useSelector(state => state.theme)
   const dispatch = useDispatch()
   
   function main() {
     return (
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={home} options={{headerShown: false}}/>
-        <Tab.Screen name="Market" component={MarketScreen} options={{headerShown: true}}/>
-        <Tab.Screen name="News" component={NewsScreen} options={{headerShown: true, }}/>
-        <Tab.Screen name="Profile" options={{ title: "Profile", headerTitle: "Account profile" }} component={ProfileScreen}/>
-      </Tab.Navigator>
+      <BottomTab.Navigator screenOptions={({ route }) => ({
+        headerRight: () => themeButton(), 
+        drawerType: 'front',
+        tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Home') {
+              iconName = focused
+                ? 'home'
+                : 'home-outline';
+            } else if (route.name === 'News') {
+              iconName = focused ? 'newspaper' : 'newspaper-outline';
+            } else if (route.name === 'Profile') {
+              iconName = focused ? 'person-circle' : 'person-circle-outline'
+            } else if (route.name === 'Market') {
+              iconName = focused ? 'ios-bar-chart-sharp' : 'ios-bar-chart-outline'
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        tabBarActiveTintColor: '#3DB2FF',
+        tabBarInactiveTintColor: 'gray',
+      })}>
+        <BottomTab.Screen name="Home" component={home} options={{
+          headerShown: false 
+        }}/>
+        <BottomTab.Screen name="Market" component={Market} options={{headerShown: true}}/>
+        <BottomTab.Screen name="News" component={NewsScreen} options={{headerShown: true, }}/>
+        <BottomTab.Screen name="Profile" options={{ title: "Profile" }} component={ProfileScreen}/>
+      </BottomTab.Navigator>
     )
   }
 
   function themeButton() {
     return (
-      <TouchableHighlight
-        onPress={() => {dispatch(change())}}
-        underlayColor={(dark) ? '#808080' : "#DDDDDD"}
-        style={{marginRight: 10, width: 40, height: 40, borderRadius: 40, justifyContent: 'center', alignItems: 'center'}}
-      >
-        <View style={{width: 20, height: 20, borderRadius: 20}}>
-          {(dark) ? (
-            <Image 
-              source={require("../assets/sun.png")}
-              style={{width: 20, height: 20, tintColor: 'white'}}  
-            />
-          ) : (
-            <Image 
-              source={require("../assets/moon.png")}
-              style={{width: 20, height: 20}}  
-            />
-          )}
-        </View>
-      </TouchableHighlight>
+      <View>
+        <TouchableOpacity
+          onPress={() => {dispatch(change())}}
+          style={{margin: 10, marginRight: 15}}
+        >
+          <View>
+            {(dark) ? (
+              <Ionicons
+                name="sunny-outline"
+                size={22} 
+                color={'white'}
+              />
+            ) : (
+              <Ionicons
+                name="moon-outline"
+                size={22} 
+              />
+            )}
+          </View>
+        </TouchableOpacity>
+      </View> 
     )
   }
   
@@ -67,7 +111,10 @@ export default function Navigations() {
             name="Main" 
             component={ MainScreen }
             options={{
-              headerRight: () => themeButton(), 
+              headerRight: () => <View style={{flexDirection: 'row'}}>
+                {searchButton()}
+                {themeButton()}
+              </View>, 
               drawerType: 'front',
             }}
         />
@@ -75,8 +122,22 @@ export default function Navigations() {
     )
   }
 
+  function Market() {
+    return (
+      <TopTab.Navigator
+        initialRouteName="Search"
+        screenOptions={{
+          tabBarLabelStyle: { fontSize: 14, fontStyle: 'normal', textTransform: 'none' },
+        }}
+      >
+        <TopTab.Screen name="Search" component={MarketScreen}/>
+        <TopTab.Screen name="WatchList" component={WatchList} options={{title: 'Watch list', }}/>
+      </TopTab.Navigator>
+    )
+  }
+
   return (
-    <NavigationContainer theme={dark ? DarkTheme : DefaultTheme}>
+    <NavigationContainer theme={dark ? MyTheme : DefaultTheme}>
       {isLoggedIn ? (
         <Stack.Navigator
           initialRouteName="Main" 

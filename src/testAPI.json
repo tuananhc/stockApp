@@ -1,9 +1,11 @@
 [
   {
-    "id": "",
-    "name": "",
-    "username": "",
-    "password": "",
-    "DOB": ""
+    "id": "0",
+    "name": "Anh Chau",
+    "username": "tuananhc",
+    "password": "1",
+    "DOB": "04102001",
+    "watchList": [],
+    "ownedList": []
   }   
 ]

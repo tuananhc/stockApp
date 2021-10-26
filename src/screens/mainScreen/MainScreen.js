@@ -20,14 +20,6 @@ export default function MainScreen() {
     })
   }
 
-  function renderItem({item}) {
-    return (
-      <Text>{item.key}</Text>
-    )
-  }
-
-  
-
   return (
     <>
       <View style={{
@@ -35,7 +27,7 @@ export default function MainScreen() {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-        <Text onPress={() => {navigation.navigate('Login')}}>The main screen</Text>
+        <CustomText onPress={() => {navigation.navigate('Login')}}>The main screen</CustomText>
       <TouchableOpacity
         onPress={() => getPrice()}
       >

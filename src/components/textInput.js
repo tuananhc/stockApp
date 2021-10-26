@@ -13,6 +13,7 @@ export default function CustomTextInput(props) {
             color={dark ? '#FFFFFF' : '#000000'}
             onChangeText={props.onChangeText}
             placeholderTextColor={dark ? '#FFFFFF' : '#808080'}
+            autoFocus={props.autoFocus}
         />
     )
 }

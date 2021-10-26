@@ -1,11 +1,21 @@
-const loggedReducer = (state = false, action) => {
+const initialState = {
+    isLoggedIn: false
+}
+
+const loggedReducer = (state = initialState, action) => {
     switch (action.type) {
         case "SIGN_IN":
-            return !state
+            return {
+                ...state,
+                isLoggedIn: true
+            }
         case "SIGN_OUT":
-            return !state
+            return {
+                ...state,
+                isLoggedIn: false
+            }
         default:
-            return false
+            return state
     }
 }
 
