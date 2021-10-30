@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux';
 export default function CustomText(props) {
     const dark = useSelector(state => state.theme)
     return (
-        <Text style={[props.style, {
+        <Text style={[{
             color: (dark) ? 'white' : 'black'
-        }]}>
+        }, props.style]}>
             {props.children}
         </Text>
     )

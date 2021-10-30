@@ -47,7 +47,7 @@ export default function LoginScreen() {
         </TouchableOpacity>
       </View>
       <TouchableOpacity
-        onPress={() => dispatch(signIn())}
+        onPress={() => dispatch(signIn({username, password}))}
       >
         <View style={{
           width: 75,
@@ -58,7 +58,22 @@ export default function LoginScreen() {
           borderRadius: 5,
           marginTop: 30
         }}>
-          <CustomText style={{color: 'white'}}>Log in</CustomText>
+          <Text style={{color: 'white'}}>Log in</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Signup')}
+      >
+        <View style={{
+          width: 100,
+          height: 30,
+          backgroundColor: '#3DB2FF',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 5,
+          marginTop: 30
+        }}>
+          <Text style={{color: 'white'}}>Sign up now</Text>
         </View>
       </TouchableOpacity>
     </SafeAreaView>

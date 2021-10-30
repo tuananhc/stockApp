@@ -14,6 +14,8 @@ export default function CustomTextInput(props) {
             onChangeText={props.onChangeText}
             placeholderTextColor={dark ? '#FFFFFF' : '#808080'}
             autoFocus={props.autoFocus}
+            autoCapitalize={props.autoCapitalize}
+            onBlur={props.onBlur}
         />
     )
 }

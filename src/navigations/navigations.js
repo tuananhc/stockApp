@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import LoginScreen from '../screens/loginScreen/LoginScreen';
+import SignUpScreen from '../screens/signUpScreen/SignUpScreen';
 import MainScreen from '../screens/mainScreen/MainScreen';
 import ProfileScreen from '../screens/profileScreen/ProfileScreen';
 import DrawerContent from '../screens/drawer/Drawer';
@@ -160,6 +161,10 @@ export default function Navigations() {
             name="Login" 
             component={LoginScreen} 
             options={{animationTypeForReplace: isLoggedIn ? 'push' : 'pop'}}
+          />
+          <Stack.Screen
+            name="Signup" 
+            component={SignUpScreen}
           />
         </Stack.Navigator>
         

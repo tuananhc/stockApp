@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 import CustomText from '../../components/text';
 
@@ -10,10 +10,10 @@ export default function MainScreen() {
   const [text, setText] = useState([])
   
   function getPrice() {
-    axios.get('https://finnhub.io/api/v1/stock/candle?symbol=AAPL&resolution=D&from=1633038335&to=1633124735&token=c5nup6iad3icte5l57r0')
+    axios.get('http://localhost:3000/users?username=tuananhc&password=1')
     .then(function(response) {
-      setText(response.data)
-      console.log(text)
+      setText(JSON.stringify(response.data))
+      console.log(response.data)
     })
     .catch(function (error) {
       setText(error[0])
@@ -43,14 +43,8 @@ export default function MainScreen() {
           <Text style={{color: 'white'}}>Get price</Text>
         </View>
       </TouchableOpacity>
-      <CustomText>this is my text</CustomText>
-      <View>
-        {Object.keys(text).forEach((key) => {
-          return (
-            <Text>{key}</Text>
-          )
-        })}
-      </View>
+      <CustomText>this is my fking text</CustomText>
+      <CustomText>{text}</CustomText>
       </View>  
     </>
   )

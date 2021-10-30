@@ -1,0 +1,27 @@
+{
+  "users": [
+    {
+      "id": "0",
+      "name": "Anh Chau",
+      "username": "tuananhc",
+      "password": "1",
+      "DOB": "04102001",
+      "watchlist": [
+        "AAPL",
+        "TSLA"
+      ],
+      "test": [
+        {
+          "id": 1
+        }
+      ],
+      "ownedList": []
+    },
+    {
+      "username": "tuananhc",
+      "password": "2",
+      "id": "q3L65FN"
+    }
+  ],
+  "stocks": []
+}
