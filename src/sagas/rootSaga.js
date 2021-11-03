@@ -1,8 +1,10 @@
 import React from 'react';
-import { all, call } from 'redux-saga/effects';
 
-import { authSagas } from './auth/authSagas';
+import logSaga from './logSaga';
 
 export default function* rootSaga() {
-  yield all([call(authSagas)]);
+  console.log('ayyo fuck you')
+  yield [
+    logSaga()
+  ];
 }

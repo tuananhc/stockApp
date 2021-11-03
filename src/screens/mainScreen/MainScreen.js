@@ -10,10 +10,14 @@ export default function MainScreen() {
   const [text, setText] = useState([])
   
   function getPrice() {
-    axios.get('http://localhost:3000/users?username=tuananhc&password=1')
+    axios.get('http://localhost:3000/users?username=nottuananh&password=1')
     .then(function(response) {
-      setText(JSON.stringify(response.data))
-      console.log(response.data)
+      if (response.data.length > 0) {
+        setText(JSON.stringify(response.data))
+        console.log(response.data)
+      } else {
+        setText("There is none bitch")
+      }
     })
     .catch(function (error) {
       setText(error[0])

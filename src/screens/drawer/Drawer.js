@@ -4,7 +4,6 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Avatar, Drawer } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as loggedActions from '../../actions/loggedActions'
 import CustomText from '../../components/text';
 import { useNavigation } from '@react-navigation/core';
 
@@ -41,7 +40,7 @@ export default function DrawerContent(props) {
         <Drawer.Section>
           <DrawerItem
             label="Log out"
-            onPress={() => dispatch(loggedActions.signOut())}            
+            onPress={() => {}}            
           />
         </Drawer.Section>
       </DrawerContentScrollView>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Button } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -154,7 +154,6 @@ export default function Navigations() {
           initialRouteName="Login" 
           screenOptions={{
             headerShown: false,
-            gestureEnabled: false
           }}
         >
           <Stack.Screen 
@@ -165,6 +164,15 @@ export default function Navigations() {
           <Stack.Screen
             name="Signup" 
             component={SignUpScreen}
+            options={{
+            headerRight: () => (
+              <Button
+                onPress={() => alert('This is a button!')}
+                title="Info"
+                color="#fff"
+              />
+            ),
+        }}
           />
         </Stack.Navigator>
         

@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+
 const Button = props => {
   const loading = props.loading ? true : false;
   const styleButton = props.style ? props.style : styles.styleButton;
   return (
     <TouchableOpacity
-      activeOpacity={1}
+      activeOpacity={0.5}
       style={styleButton}
       onPress={() => props.onPress()}>
       {loading ? (
@@ -14,8 +15,9 @@ const Button = props => {
         props.children
       )}
     </TouchableOpacity>
-  );
-};
+  )
+}
+
 const styles = StyleSheet.create({
   Button: {
     justifyContent: 'center',

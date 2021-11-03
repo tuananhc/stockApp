@@ -1,0 +1,4 @@
+// LOG_IN constants
+const LOG_IN_REQUEST = "LOG_IN_REQUEST"
+const LOG_IN_SUCCESS = "LOG_IN_SUCCESS"
+const LOG_IN_FAILED  = "LOG_IN_FAILED"

@@ -3,6 +3,8 @@ import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import createSagaMiddleware from '@redux-saga/core'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import rootSaga from './sagas/rootSaga'
+import logSaga from './sagas/logSaga'
 
 import combinedReducers from './reducers/CombineReducer'
 import Navigations from './navigations/navigations'
@@ -11,8 +13,10 @@ const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
   combinedReducers,
-  composeWithDevTools()
+  composeWithDevTools(applyMiddleware(sagaMiddleware)),
 )
+
+sagaMiddleware.run(logSaga)
 
 export default function EntryPoint() {
 
