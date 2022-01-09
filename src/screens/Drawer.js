@@ -3,25 +3,24 @@ import { View, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Avatar, Drawer } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import CustomText from '../../components/text';
+import CustomText from '../components/text';
 import { useNavigation } from '@react-navigation/core';
+import { logOut } from '../actions/logActions';
 
 export default function DrawerContent(props) {
   const navigation = useNavigation()
   const dispatch = useDispatch()
+  const username = useSelector(state => state.loggedReducer.username)
 
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View>
           <View style={styles.userInfo}>
-            <Avatar.Image
-              source={require('../../assets/UserDrawer/Group6516.png')}
-              size={50}
-            />
             <View style={{ paddingLeft: 20 }}>
-              <CustomText style={{ color: 'black', fontSize: 20 }}>abc</CustomText>
+              <CustomText style={{ color: 'black', fontSize: 20 }}>{username}</CustomText>
               <CustomText style={{ opacity: 0.5, color: 'black' }}>abc@gmail.com</CustomText>
             </View>
           </View>
@@ -29,7 +28,7 @@ export default function DrawerContent(props) {
 
         <Drawer.Section>
           <DrawerItem
-            label="Trang chủ"
+            label="Home page"
             onPress={() => navigation.reset({
               index: 0,
               routes: [{ name: 'Market' }],
@@ -38,9 +37,11 @@ export default function DrawerContent(props) {
         </Drawer.Section>
 
         <Drawer.Section>
+          
           <DrawerItem
+            icon={() => <Ionicons name='log-out-outline' size={22} color={'gray'} style={{transform: [{rotateY: '180deg'}], marginRight: -15}}/>}
             label="Log out"
-            onPress={() => {}}            
+            onPress={() => dispatch(logOut())}            
           />
         </Drawer.Section>
       </DrawerContentScrollView>

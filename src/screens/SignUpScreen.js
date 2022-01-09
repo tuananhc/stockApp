@@ -5,9 +5,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import LinearGradient from 'react-native-linear-gradient';
 
-import CustomTextInput from '../../components/textInput';
-import CustomText from '../../components/text';
-import Button from '../../components/button' 
+import CustomTextInput from '../components/textInput';
+import CustomText from '../components/text';
+import Button from '../components/button' 
+import { signUpRequest } from '../actions/signUpActions';
+import { useDispatch } from 'react-redux';
 
 function createInput(placeholder) {
   return (
@@ -21,6 +23,7 @@ function createInput(placeholder) {
 
 export default function SignUpScreen() {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
   const [fullname, setFullname] = useState("")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -144,6 +147,7 @@ export default function SignUpScreen() {
           onPress={() => {
             setIsLoading(!loading)
             setSignedUp(true)
+            dispatch(signUpRequest(username, password))
           }} 
           loading={loading}
         >

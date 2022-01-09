@@ -16,6 +16,7 @@ export default function CustomTextInput(props) {
             autoFocus={props.autoFocus}
             autoCapitalize={props.autoCapitalize}
             onBlur={props.onBlur}
+            onSubmitEditing={props.onSubmitEditing}
         />
     )
 }

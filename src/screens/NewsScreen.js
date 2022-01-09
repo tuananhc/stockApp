@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { View } from 'react-native';
 
-import CustomText from '../../components/text';
+import CustomText from '../components/text';
 
 export default function NewsScreen() {
     return (

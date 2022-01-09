@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 
-import CustomText from '../../components/text';
+import CustomText from '../components/text';
 
 export default function MainScreen() {
   const navigation = useNavigation();
@@ -22,6 +22,7 @@ export default function MainScreen() {
     .catch(function (error) {
       setText(error[0])
     })
+    console.log('dcmm')
   }
 
   return (

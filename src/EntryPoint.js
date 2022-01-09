@@ -16,7 +16,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(sagaMiddleware)),
 )
 
-sagaMiddleware.run(logSaga)
+sagaMiddleware.run(rootSaga)
 
 export default function EntryPoint() {
 

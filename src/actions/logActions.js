@@ -1,10 +1,6 @@
-export const logInSuccess = (username, password) => {
+export const logInSuccess = () => {
     return {
-        type: 'LOG_IN_SUCCESS',
-        payload: {
-            username: username, 
-            password: password
-        }
+        type: 'LOG_IN_SUCCESS'
     }
 }
 
@@ -23,5 +19,11 @@ export const logInRequest = (username, password) => {
         type: 'LOG_IN_REQUEST',
         username, 
         password
+    }
+}
+
+export const logOut = () => {
+    return {
+        type: 'LOG_OUT'
     }
 }

@@ -1,10 +1,12 @@
+import { all } from '@redux-saga/core/effects';
 import React from 'react';
 
 import logSaga from './logSaga';
+import signUpSaga from './signUpSaga'
 
 export default function* rootSaga() {
-  console.log('ayyo fuck you')
-  yield [
-    logSaga()
-  ];
+  yield all ([
+    logSaga(),
+    signUpSaga()
+  ]);
 }

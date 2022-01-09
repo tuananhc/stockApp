@@ -1,13 +1,30 @@
-import { takeLatest } from 'redux-saga/effects'  
+import React from 'react';
+import { call, put, takeLatest } from 'redux-saga/effects'  
+import axios from 'axios';
 
-function* signupFlow (action) {}
-
-function* signupWatcher () {  
-    // takeLatest() takes the LATEST call of that action and runs it
-    // if we we're to use takeEvery, it would take every single
-    // one of the actions and kick off a new task to handle it
-    // CONCURRENTLY!!!
-    yield takeLatest('SIGN_UP_REQUEST', signupFlow)
+async function signUpApi(username, password) {
+  try {
+    console.log(axios.post('http://localhost:3000/users'))
+    return await axios.post('http://localhost:3000/users', {
+      username: username,
+      password: password,
+      watchList: [],
+      ownedList: []
+    })
+  } catch (error) {
+    throw error
   }
-  
-  export default signupWatcher  
+};
+
+function* signUpFlow(action) {
+  try {
+    const response = yield call(signUpApi, action.username, action.password)
+    yield put({ type: "SIGN_UP_SUCCESS", action })
+  } catch (error) {
+    yield put({ type: "SIGN_UP_FAILED", action })
+  }
+}
+
+export default function* signUpListener() {
+  yield takeLatest("SIGN_UP_REQUEST", signUpFlow)
+}

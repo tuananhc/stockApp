@@ -8,16 +8,19 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { useSelector, useDispatch } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import LoginScreen from '../screens/loginScreen/LoginScreen';
-import SignUpScreen from '../screens/signUpScreen/SignUpScreen';
-import MainScreen from '../screens/mainScreen/MainScreen';
-import ProfileScreen from '../screens/profileScreen/ProfileScreen';
-import DrawerContent from '../screens/drawer/Drawer';
-import MarketScreen from '../screens/marketScreen/MarketScreen';
-import NewsScreen from '../screens/newsScreen/NewsScreen';
+import LoginScreen from '../screens/LoginScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+import MainScreen from '../screens/MainScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import DrawerContent from '../screens/Drawer';
+import MarketScreen from '../screens/MarketScreen';
+import NewsScreen from '../screens/NewsScreen';
 import WatchList from '../screens/WatchList';
 import { change } from '../actions/themeActions';
 import searchButton from '../components/searchButton';
+import signUpReducer from '../reducers/signUpReducer';
+import StockInfo from '../screens/StockInfo'
+import goBackButton from '../components/goBackButton';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -38,7 +41,9 @@ const MyTheme = {
 
 export default function Navigations() {
   var isLoggedIn = useSelector(state => state.loggedReducer.isLoggedIn)
+  var isSignedUp = useSelector(state => state.signUpReducer.successful)
   const dark = useSelector(state => state.theme)
+  const stockName = useSelector(state => state.stock.search)
   const dispatch = useDispatch()
   
   function main() {
@@ -60,8 +65,6 @@ export default function Navigations() {
             } else if (route.name === 'Market') {
               iconName = focused ? 'ios-bar-chart-sharp' : 'ios-bar-chart-outline'
             }
-
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         tabBarActiveTintColor: '#3DB2FF',
@@ -139,7 +142,7 @@ export default function Navigations() {
 
   return (
     <NavigationContainer theme={dark ? MyTheme : DefaultTheme}>
-      {isLoggedIn ? (
+      {(isLoggedIn || isSignedUp) ? (
         <Stack.Navigator
           initialRouteName="Main" 
           screenOptions={{
@@ -147,7 +150,14 @@ export default function Navigations() {
             headerLeft: () => null
           }}
         >
-          <Stack.Screen name="Main" component={main} />
+          <Stack.Screen name="Main" component={main}/>
+          <Stack.Screen name="Info" component={StockInfo} options={{
+              headerShown: true,
+              headerTitle: stockName,
+              headerTitleStyle: {fontWeight: 'bold', fontSize: 20},
+              headerLeft: () => goBackButton()
+            }}
+          />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator 

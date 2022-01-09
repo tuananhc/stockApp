@@ -7,6 +7,7 @@ import { Alert } from 'react-native';
 async function logInApi(username, password) {
   try {
     var result = await axios.get('http://localhost:3000/users?username=' + username + '&password=' + password)
+    console.log(result)
   } catch (error) {
     return undefined
   }
@@ -15,7 +16,9 @@ async function logInApi(username, password) {
 
 function* logInFlow(action) {
   const response = yield call(logInApi, action.username, action.password)
-  if (response.data.length > 0) {
+  console.log(response)
+  if (response !== undefined && response.data.length > 0) { 
+    console.log(action)
     yield put({ type: "LOG_IN_SUCCESS", action })
   } else {
     Alert.alert("User does not exist") 
@@ -24,6 +27,5 @@ function* logInFlow(action) {
 }
 
 export default function* logInListener() {
-  console.log('alo im here')
   yield takeLatest("LOG_IN_REQUEST", logInFlow)
 }
