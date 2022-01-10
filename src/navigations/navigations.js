@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity, Button } from 'react-native';
+import { View, TouchableOpacity, Button, Text } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -21,6 +21,8 @@ import searchButton from '../components/searchButton';
 import signUpReducer from '../reducers/signUpReducer';
 import StockInfo from '../screens/StockInfo'
 import goBackButton from '../components/goBackButton';
+import Transaction from '../screens/TransactionScreen';
+import CustomText from '../components/text';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -41,7 +43,6 @@ const MyTheme = {
 
 export default function Navigations() {
   var isLoggedIn = useSelector(state => state.loggedReducer.isLoggedIn)
-  var isSignedUp = useSelector(state => state.signUpReducer.successful)
   const dark = useSelector(state => state.theme)
   const stockName = useSelector(state => state.stock.search)
   const dispatch = useDispatch()
@@ -51,22 +52,38 @@ export default function Navigations() {
       <BottomTab.Navigator screenOptions={({ route }) => ({
         headerRight: () => themeButton(), 
         drawerType: 'front',
+        tabBarShowLabel: false,
         tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === 'Home') {
-              iconName = focused
-                ? 'home'
-                : 'home-outline';
-            } else if (route.name === 'News') {
-              iconName = focused ? 'newspaper' : 'newspaper-outline';
-            } else if (route.name === 'Profile') {
-              iconName = focused ? 'person-circle' : 'person-circle-outline'
-            } else if (route.name === 'Market') {
-              iconName = focused ? 'ios-bar-chart-sharp' : 'ios-bar-chart-outline'
-            }
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
+          let iconName;
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'News') {
+            iconName = focused ? 'newspaper' : 'newspaper-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person-circle' : 'person-circle-outline'
+          } else if (route.name === 'Market') {
+            iconName = focused ? 'stats-chart' : 'stats-chart-outline'
+          } else if (route.name === 'Transaction') {
+            return <>
+              <View style={{
+                height: 45, 
+                width: 45, 
+                borderRadius: 45, 
+                backgroundColor: '#3DB2FF', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                position: 'absolute',
+                top: -10,
+              }}>
+                <Ionicons name='swap-horizontal' size={size + 3} color='white' rotation='45'/>
+              </View>
+            </> 
+          }
+          return <>
+            <Ionicons name={iconName} size={size} color={color}/>
+            <CustomText style={{fontSize: 10}}>{route.name}</CustomText>
+          </>
+        },
         tabBarActiveTintColor: '#3DB2FF',
         tabBarInactiveTintColor: 'gray',
       })}>
@@ -74,35 +91,51 @@ export default function Navigations() {
           headerShown: false 
         }}/>
         <BottomTab.Screen name="Market" component={Market} options={{headerShown: true}}/>
+        <BottomTab.Screen name="Transaction" options={{ title: "Transaction", headerShown: false, showLabel: false }} component={Transaction}/>
         <BottomTab.Screen name="News" component={NewsScreen} options={{headerShown: true, }}/>
-        <BottomTab.Screen name="Profile" options={{ title: "Profile" }} component={ProfileScreen}/>
+        <BottomTab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen}/>
       </BottomTab.Navigator>
     )
   }
 
   function themeButton() {
     return (
-      <View>
-        <TouchableOpacity
-          onPress={() => {dispatch(change())}}
-          style={{margin: 10, marginRight: 15}}
-        >
-          <View>
-            {(dark) ? (
-              <Ionicons
-                name="sunny-outline"
-                size={22} 
-                color={'white'}
-              />
-            ) : (
-              <Ionicons
-                name="moon-outline"
-                size={22} 
-              />
-            )}
-          </View>
-        </TouchableOpacity>
-      </View> 
+      <TouchableOpacity
+        onPress={() => {dispatch(change())}}
+        style={{margin: 10, marginRight: 15}}
+      >
+        <View>
+          {(dark) ? (
+            <Ionicons
+              name="sunny-outline"
+              size={22} 
+              color={'white'}
+            />
+          ) : (
+            <Ionicons
+              name="moon-outline"
+              size={22} 
+            />
+          )}
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  function transactionButton() {
+    return (
+      <View style={{
+        height: 45, 
+        width: 45, 
+        borderRadius: 45, 
+        backgroundColor: '#3DB2FF', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        position: 'absolute',
+        top: -10,
+      }}>
+        <Ionicons name='swap-horizontal' size={25} color='white'/>
+      </View>
     )
   }
   
@@ -142,12 +175,13 @@ export default function Navigations() {
 
   return (
     <NavigationContainer theme={dark ? MyTheme : DefaultTheme}>
-      {(isLoggedIn || isSignedUp) ? (
+      {(isLoggedIn) ? (
         <Stack.Navigator
           initialRouteName="Main" 
           screenOptions={{
             headerShown: false,
-            headerLeft: () => null
+            headerLeft: () => null,
+            orientation: "portrait"
           }}
         >
           <Stack.Screen name="Main" component={main}/>
@@ -155,7 +189,8 @@ export default function Navigations() {
               headerShown: true,
               headerTitle: stockName,
               headerTitleStyle: {fontWeight: 'bold', fontSize: 20},
-              headerLeft: () => goBackButton()
+              headerLeft: () => goBackButton(),
+              orientation: "all"
             }}
           />
         </Stack.Navigator>
@@ -164,6 +199,7 @@ export default function Navigations() {
           initialRouteName="Login" 
           screenOptions={{
             headerShown: false,
+            orientation: "portrait"
           }}
         >
           <Stack.Screen 

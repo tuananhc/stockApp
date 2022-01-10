@@ -3,10 +3,12 @@ import React from 'react';
 
 import logSaga from './logSaga';
 import signUpSaga from './signUpSaga'
+import searchSaga from './searchSaga'
 
 export default function* rootSaga() {
   yield all ([
     logSaga(),
-    signUpSaga()
+    signUpSaga(),
+    searchSaga()
   ]);
 }

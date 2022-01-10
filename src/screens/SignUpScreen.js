@@ -24,12 +24,11 @@ function createInput(placeholder) {
 export default function SignUpScreen() {
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const [fullname, setFullname] = useState("")
+  const [fullName, setFullName] = useState("")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const [loading, setIsLoading] = useState(false)
-  const [long, setIsLong] = useState(true)
   const [signedUp, setSignedUp] = useState(false)
 
   return (
@@ -55,7 +54,7 @@ export default function SignUpScreen() {
           />
         </View>
       </View> 
-      {fullname.length > 0 || !signedUp ? (
+      {fullName.length > 0 || !signedUp ? (
         <View style={{height: 20}}/>
       ) : ( 
         <View style={{height: 20}}>
@@ -93,13 +92,23 @@ export default function SignUpScreen() {
           />
         </View>
       </View> 
-      {username.length > 0 || !signedUp ? (
+      {username.length >= 8 || !signedUp ? (
         <View style={{height: 20}}/>
       ) : ( 
-        <View style={{height: 20}}>
-          <Text style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic', marginTop: 5, fontSize: 14}}>
-            Field cannot be empty
-          </Text>
+        <View>
+          {username.length > 0 && username.length < 8 ? (
+            <View style={{height: 20}}>
+              <Text style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic', marginTop: 5, fontSize: 14}}>
+                Username must be at least 8 characters long
+              </Text>
+            </View>
+          ) : (
+            <View style={{height: 20}}>
+              <Text style={{color: 'red', fontWeight: 'bold', fontStyle: 'italic', marginTop: 5, fontSize: 14}}>
+                Field cannot be empty
+              </Text>
+            </View>
+          )}
         </View>
       )}
 
@@ -145,9 +154,11 @@ export default function SignUpScreen() {
             borderRadius: 30,
           }}
           onPress={() => {
-            setIsLoading(!loading)
             setSignedUp(true)
-            dispatch(signUpRequest(username, password))
+            if (password.length >= 8 && username.length > 0 && fullName.length > 0 && email.length > 0) {
+              setIsLoading(!loading)
+              dispatch(signUpRequest(username, password))
+            }
           }} 
           loading={loading}
         >
