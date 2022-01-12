@@ -1,0 +1,134 @@
+Date : 2022-01-11 13:42:23
+Directory : /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp
+Total : 68 files,  29600 codes, 188 comments, 261 blanks, all 30049 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          7 |     27,549 |          0 |          3 |     27,552 |
+| JavaScript |         38 |      1,359 |         17 |        117 |      1,493 |
+| XML        |          9 |        201 |          3 |         14 |        218 |
+| Java       |          3 |        128 |         25 |         19 |        172 |
+| Groovy     |          3 |        127 |        120 |         28 |        275 |
+| MATLAB     |          3 |        110 |          0 |         29 |        139 |
+| Batch      |          1 |         68 |          0 |         22 |         90 |
+| Ini        |          1 |         45 |          4 |         17 |         66 |
+| Properties |          2 |          8 |         19 |          8 |         35 |
+| C++        |          1 |          5 |          0 |          4 |          9 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                                  | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                                     |         68 |     29,600 |        188 |        261 |     30,049 |
+| __tests__                                                                                                                                             |          1 |          7 |          4 |          4 |         15 |
+| android                                                                                                                                               |         13 |        372 |        166 |         86 |        624 |
+| android/app                                                                                                                                           |          8 |        259 |        142 |         51 |        452 |
+| android/app/src                                                                                                                                       |          7 |        169 |         27 |         28 |        224 |
+| android/app/src/debug                                                                                                                                 |          2 |         70 |          8 |          9 |         87 |
+| android/app/src/debug/java                                                                                                                            |          1 |         59 |          8 |          6 |         73 |
+| android/app/src/debug/java/com                                                                                                                        |          1 |         59 |          8 |          6 |         73 |
+| android/app/src/debug/java/com/stockapp                                                                                                               |          1 |         59 |          8 |          6 |         73 |
+| android/app/src/main                                                                                                                                  |          5 |         99 |         19 |         19 |        137 |
+| android/app/src/main/java                                                                                                                             |          2 |         69 |         17 |         13 |         99 |
+| android/app/src/main/java/com                                                                                                                         |          2 |         69 |         17 |         13 |         99 |
+| android/app/src/main/java/com/stockapp                                                                                                                |          2 |         69 |         17 |         13 |         99 |
+| android/app/src/main/res                                                                                                                              |          2 |          7 |          2 |          4 |         13 |
+| android/app/src/main/res/values                                                                                                                       |          2 |          7 |          2 |          4 |         13 |
+| android/gradle                                                                                                                                        |          1 |          5 |          0 |          1 |          6 |
+| android/gradle/wrapper                                                                                                                                |          1 |          5 |          0 |          1 |          6 |
+| ios                                                                                                                                                   |         11 |        319 |          1 |         39 |        359 |
+| ios/stockapp                                                                                                                                          |          7 |        228 |          1 |         21 |        250 |
+| ios/stockapp.xcodeproj                                                                                                                                |          1 |          8 |          0 |          1 |          9 |
+| ios/stockapp.xcodeproj/project.xcworkspace                                                                                                            |          1 |          8 |          0 |          1 |          9 |
+| ios/stockapp.xcodeproj/project.xcworkspace/xcshareddata                                                                                               |          1 |          8 |          0 |          1 |          9 |
+| ios/stockapp.xcworkspace                                                                                                                              |          1 |          8 |          0 |          1 |          9 |
+| ios/stockapp.xcworkspace/xcshareddata                                                                                                                 |          1 |          8 |          0 |          1 |          9 |
+| ios/stockapp/Images.xcassets                                                                                                                          |          2 |         44 |          0 |          1 |         45 |
+| ios/stockapp/Images.xcassets/AppIcon.appiconset                                                                                                       |          1 |         38 |          0 |          0 |         38 |
+| ios/stockappTests                                                                                                                                     |          2 |         75 |          0 |         16 |         91 |
+| src                                                                                                                                                   |         32 |      1,324 |          4 |        105 |      1,433 |
+| src/actions                                                                                                                                           |          5 |         70 |          1 |          7 |         78 |
+| src/components                                                                                                                                        |          6 |        134 |          0 |          9 |        143 |
+| src/navigations                                                                                                                                       |          1 |        192 |          0 |         10 |        202 |
+| src/reducers                                                                                                                                          |          5 |        132 |          0 |         12 |        144 |
+| src/sagas                                                                                                                                             |          4 |        124 |          0 |         12 |        136 |
+| src/screens                                                                                                                                           |         10 |        651 |          3 |         49 |        703 |
++-------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                                              | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/.eslintrc.js                                                                     | JavaScript |          4 |          0 |          1 |          5 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/.flowconfig                                                                      | Ini        |         45 |          4 |         17 |         66 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/.prettierrc.js                                                                   | JavaScript |          7 |          0 |          1 |          8 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/.watchmanconfig                                                                  | JSON       |          1 |          0 |          0 |          1 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/__tests__/App-test.js                                                            | JavaScript |          7 |          4 |          4 |         15 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/app/build.gradle                                                         | Groovy     |         90 |        115 |         23 |        228 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/app/src/debug/AndroidManifest.xml                                        | XML        |         11 |          0 |          3 |         14 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/app/src/debug/java/com/stockapp/ReactNativeFlipper.java                  | Java       |         59 |          8 |          6 |         73 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/app/src/main/AndroidManifest.xml                                         | XML        |         23 |          0 |          2 |         25 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/app/src/main/java/com/stockapp/MainActivity.java                         | Java       |          8 |          4 |          4 |         16 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/app/src/main/java/com/stockapp/MainApplication.java                      | Java       |         61 |         13 |          9 |         83 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/app/src/main/res/values/strings.xml                                      | XML        |          3 |          0 |          1 |          4 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/app/src/main/res/values/styles.xml                                       | XML        |          4 |          2 |          3 |          9 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/build.gradle                                                             | Groovy     |         30 |          5 |          4 |         39 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/gradle.properties                                                        | Properties |          3 |         19 |          7 |         29 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/gradle/wrapper/gradle-wrapper.properties                                 | Properties |          5 |          0 |          1 |          6 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/gradlew.bat                                                              | Batch      |         68 |          0 |         22 |         90 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/android/settings.gradle                                                          | Groovy     |          7 |          0 |          1 |          8 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/app.json                                                                         | JSON       |          4 |          0 |          0 |          4 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/babel.config.js                                                                  | JavaScript |          3 |          0 |          1 |          4 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/index.js                                                                         | JavaScript |          4 |          3 |          3 |         10 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockapp.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist | XML        |          8 |          0 |          1 |          9 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockapp.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist                   | XML        |          8 |          0 |          1 |          9 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockapp/AppDelegate.h                                                       | C++        |          5 |          0 |          4 |          9 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockapp/AppDelegate.m                                                       | MATLAB     |         52 |          0 |         11 |         63 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockapp/Images.xcassets/AppIcon.appiconset/Contents.json                    | JSON       |         38 |          0 |          0 |         38 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockapp/Images.xcassets/Contents.json                                       | JSON       |          6 |          0 |          1 |          7 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockapp/Info.plist                                                          | XML        |         74 |          0 |          1 |         75 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockapp/LaunchScreen.storyboard                                             | XML        |         46 |          1 |          1 |         48 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockapp/main.m                                                              | MATLAB     |          7 |          0 |          3 |         10 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockappTests/Info.plist                                                     | XML        |         24 |          0 |          1 |         25 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/ios/stockappTests/stockappTests.m                                                | MATLAB     |         51 |          0 |         15 |         66 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/metro.config.js                                                                  | JavaScript |         10 |          6 |          2 |         18 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/package-lock.json                                                                | JSON       |     27,294 |          0 |          1 |     27,295 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/package.json                                                                     | JSON       |         53 |          0 |          1 |         54 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/EntryPoint.js                                                                | JavaScript |         21 |          0 |          6 |         27 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/constants.js                                                         | JavaScript |          3 |          1 |          0 |          4 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/logActions.js                                                        | JavaScript |         26 |          0 |          3 |         29 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/searchActions.js                                                     | JavaScript |         19 |          0 |          2 |         21 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/signUpActions.js                                                     | JavaScript |         17 |          0 |          2 |         19 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/themeActions.js                                                      | JavaScript |          5 |          0 |          0 |          5 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/button.js                                                         | JavaScript |         28 |          0 |          2 |         30 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/changeThemeButton.js                                              | JavaScript |         28 |          0 |          2 |         30 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/goBackButton.js                                                   | JavaScript |         21 |          0 |          1 |         22 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/searchButton.js                                                   | JavaScript |         21 |          0 |          1 |         22 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/text.js                                                           | JavaScript |         16 |          0 |          1 |         17 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/textInput.js                                                      | JavaScript |         20 |          0 |          2 |         22 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/navigations/navigations.js                                                   | JavaScript |        192 |          0 |         10 |        202 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/CombineReducer.js                                                   | JavaScript |         12 |          0 |          3 |         15 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/LoggedReducer.js                                                    | JavaScript |         39 |          0 |          2 |         41 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/SearchReducer.js                                                    | JavaScript |         38 |          0 |          2 |         40 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/ThemeReducers.js                                                    | JavaScript |          9 |          0 |          1 |         10 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/signUpReducer.js                                                    | JavaScript |         34 |          0 |          4 |         38 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/logSaga.js                                                             | JavaScript |         29 |          0 |          3 |         32 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/rootSaga.js                                                            | JavaScript |         12 |          0 |          2 |         14 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/searchSaga.js                                                          | JavaScript |         55 |          0 |          4 |         59 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/signUpSaga.js                                                          | JavaScript |         28 |          0 |          3 |         31 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/Drawer.js                                                            | JavaScript |         61 |          0 |          8 |         69 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/LoginScreen.js                                                       | JavaScript |        111 |          0 |          4 |        115 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/MainScreen.js                                                        | JavaScript |         52 |          0 |          4 |         56 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/MarketScreen.js                                                      | JavaScript |         72 |          0 |          4 |         76 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/NewsScreen.js                                                        | JavaScript |         11 |          0 |          2 |         13 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/ProfileScreen.js                                                     | JavaScript |         23 |          0 |          3 |         26 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/SignUpScreen.js                                                      | JavaScript |        165 |          0 |          7 |        172 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/StockInfo.js                                                         | JavaScript |        135 |          3 |         14 |        152 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/TransactionScreen.js                                                 | JavaScript |         11 |          0 |          1 |         12 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/WatchList.js                                                         | JavaScript |         10 |          0 |          2 |         12 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/testAPI.json                                                                     | JSON       |        153 |          0 |          0 |        153 |
+| Total                                                                                                                                                 |            |     29,600 |        188 |        261 |     30,049 |
++-------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

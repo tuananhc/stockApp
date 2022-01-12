@@ -6,39 +6,25 @@ import Svg, {Line, Rect, Text as T} from 'react-native-svg'
 
 import Button from '../components/button';
 import CustomText from '../components/text';
-import { foundStock } from '../actions/searchActions';
 
 const CANDLE_WIDTH = 10
 const CHART_HEIGHT = Dimensions.get('window').height * 0.4
-const CANDLE_GAP = 30
+const CANDLE_GAP = 20
 const TOP_GAP = 30
 const CANDLE_STROKE_WIDTH = 2
-const testData = {c: [200, 300, 150], o: [100, 200, 250], l: [50, 150, 100], h: [250, 350, 300], s: 'ok'}
 
 export default function stockInfo() {
-  const [data, setData] = useState({})
-  const [symbol, setSymbol] = useState("")
-  const [description, setDescription] = useState("")
   const chart = useRef(null)
-  const stockName = useSelector(state => state.stock.search)
-  const dispatch = useDispatch()
+  const data = useSelector(state => state.stock.stockData)
 
   useEffect(() => {
     focusOnEnd()
   }, [chart, data])
 
-  useEffect(() => {
-    findName(stockName)
-  }, [])
-
   function focusOnEnd() {
     if (chart.current !== null) {
       chart.current.scrollToEnd({animated: false})
     }
-  }
-
-  function capitalize(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1)
   }
 
   function drawCandle(open, close, high, low, num, highest, lowest) {
@@ -110,51 +96,11 @@ export default function stockInfo() {
     }
   }
 
-  async function findName(name) {
-    const response = await axios.get(`https://finnhub.io/api/v1/search?q=${name}&token=c5nup6iad3icte5l57r0`)
-      .then(function (response) {
-        console.log(response.data.result);
-        return response
-      })
-      .catch(function (error) {
-        console.log(error);
-        return error
-      })
-    setSymbol(response.data.result[0].displaySymbol)
-    setDescription(response.data.result[0].description.toLowerCase().split(" ").map(capitalize).join(" "))
-    dispatch(foundStock(symbol, description))
-    var today = new Date().getTime()
-    console.log(today)
-    console.log("symbol: ", symbol)
-    const prices = await axios.get("https://finnhub.io/api/v1/crypto/candle?symbol=BINANCE:BTCUSDT&resolution=W&from=1610226834&to=1641783760&token=c5nup6iad3icte5l57r0")
-    .then(function (response) {
-      console.log(response.data)
-      setData(response.data)
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
-  }
-
   return (
     <ScrollView style={{marginTop: 20}}>
       <View style={{alignItems: 'center'}}>
-        <CustomText>Stonk info</CustomText>
-        <CustomText>des: {description}</CustomText>
-        <Button
-          onPress={() => findName(stockName)}
-        >
-          <Text>Test</Text>
-        </Button>
-            {drawChart(data)}
-        
-        <Button
-          onPress={() => focusOnEnd()}
-        >
-          <Text>ENd</Text>
-        </Button>
+        {drawChart(data)}
       </View>
-      
     </ScrollView>
   )
 }

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { SafeAreaView, TextInput, TouchableOpacity, View, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import CustomText from '../components/text';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +10,7 @@ import CustomTextInput from '../components/textInput';
 import Button from '../components/button';
 import { Alert } from 'react-native';
 import loggedReducer from '../reducers/LoggedReducer';
+import LinearGradient from 'react-native-linear-gradient';
 
 const styles = {
   TextInput: {
@@ -58,12 +60,12 @@ export default function LoginScreen() {
             />
           </View>
           <TouchableOpacity
-            style={{flex: 0.1, alignItems: 'flex-end', marginRight: 10}}
+            style={{flex: 0.1, alignItems: 'flex-end', margin: 5, transform: [{rotateY: '180deg'}]}}
             onPress={() => setPasswordVisible(!passwordVisible)}>
               {(passwordVisible) ? (
-                <Image style={{height: 20, width: 20, tintColor: 'darkgray'}} source={require('../assets/notvisible.png')} />
+                <Ionicons name='eye-off-outline' size={20} color='darkgray'/>
               ) : (
-                <Image style={{height: 20, width: 20, tintColor: 'darkgray'}} source={require('../assets/visible.png')}/>
+                <Ionicons name='eye-outline' size={20} color='darkgray'/>
               )}
           </TouchableOpacity>
         </View>
@@ -87,8 +89,9 @@ export default function LoginScreen() {
             if (username === '' || password === '') {
               setSubmit(true)
             } else {
-              dispatch(logInRequest(username, password))}}
+              dispatch(logInRequest(username, password))
             }
+          }}
           loading={loading}
         >
           <Text style={{fontSize: 14, color: '#fff', fontWeight: 'bold'}}>Log in</Text>

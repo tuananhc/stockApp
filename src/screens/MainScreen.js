@@ -25,6 +25,18 @@ export default function MainScreen() {
     console.log('dcmm')
   }
 
+  async function find() {
+    const response = await axios.get("https://finnhub.io/api/v1/search")
+      .then(function (response) {
+        console.log(response)
+        return response
+      })
+      .catch(function (error) {
+        console.log(error);
+        return error
+      })
+  }
+
   return (
     <>
       <View style={{
@@ -46,6 +58,21 @@ export default function MainScreen() {
           marginTop: 30
         }}>
           <Text style={{color: 'white'}}>Get price</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => find()}
+      >
+        <View style={{
+          width: 75,
+          height: 30,
+          backgroundColor: '#3DB2FF',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 5,
+          marginTop: 30
+        }}>
+          <Text style={{color: 'white'}}>Get shid on</Text>
         </View>
       </TouchableOpacity>
       <CustomText>this is my fking text</CustomText>

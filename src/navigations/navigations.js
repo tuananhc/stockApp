@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity, Button, Text } from 'react-native';
+import { View, TouchableHighlight, Button, Text } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -16,13 +16,12 @@ import DrawerContent from '../screens/Drawer';
 import MarketScreen from '../screens/MarketScreen';
 import NewsScreen from '../screens/NewsScreen';
 import WatchList from '../screens/WatchList';
-import { change } from '../actions/themeActions';
 import searchButton from '../components/searchButton';
-import signUpReducer from '../reducers/signUpReducer';
 import StockInfo from '../screens/StockInfo'
 import goBackButton from '../components/goBackButton';
 import Transaction from '../screens/TransactionScreen';
 import CustomText from '../components/text';
+import changeThemeButton from '../components/changeThemeButton';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -44,13 +43,17 @@ const MyTheme = {
 export default function Navigations() {
   var isLoggedIn = useSelector(state => state.loggedReducer.isLoggedIn)
   const dark = useSelector(state => state.theme)
-  const stockName = useSelector(state => state.stock.search)
+  const stockInfo = useSelector(state => state.stock)
   const dispatch = useDispatch()
+
+  function capitalize(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  }
   
   function main() {
     return (
       <BottomTab.Navigator screenOptions={({ route }) => ({
-        headerRight: () => themeButton(), 
+        headerRight: () => changeThemeButton(), 
         drawerType: 'front',
         tabBarShowLabel: false,
         tabBarIcon: ({ focused, color, size }) => {
@@ -64,20 +67,7 @@ export default function Navigations() {
           } else if (route.name === 'Market') {
             iconName = focused ? 'stats-chart' : 'stats-chart-outline'
           } else if (route.name === 'Transaction') {
-            return <>
-              <View style={{
-                height: 45, 
-                width: 45, 
-                borderRadius: 45, 
-                backgroundColor: '#3DB2FF', 
-                justifyContent: 'center', 
-                alignItems: 'center',
-                position: 'absolute',
-                top: -10,
-              }}>
-                <Ionicons name='swap-horizontal' size={size + 3} color='white' rotation='45'/>
-              </View>
-            </> 
+            return <Ionicons name='swap-horizontal' size={size} color={'white'}/>
           }
           return <>
             <Ionicons name={iconName} size={size} color={color}/>
@@ -91,51 +81,31 @@ export default function Navigations() {
           headerShown: false 
         }}/>
         <BottomTab.Screen name="Market" component={Market} options={{headerShown: true}}/>
-        <BottomTab.Screen name="Transaction" options={{ title: "Transaction", headerShown: false, showLabel: false }} component={Transaction}/>
+        <BottomTab.Screen name="Transaction" 
+          options={{ title: "Transaction", headerShown: false, showLabel: false,
+          tabBarButton: ({children, onPress}) => <>
+            <TouchableHighlight
+              onPress={onPress}
+              style={{
+                height: 50, 
+                width: 50, 
+                borderRadius: 50, 
+                backgroundColor: '#3DB2FF', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                marginTop: -10,
+              }}
+              underlayColor='#008DD7'
+            >
+              {children}
+            </TouchableHighlight>
+          </> 
+          }} 
+          component={Transaction}
+        />
         <BottomTab.Screen name="News" component={NewsScreen} options={{headerShown: true, }}/>
         <BottomTab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen}/>
       </BottomTab.Navigator>
-    )
-  }
-
-  function themeButton() {
-    return (
-      <TouchableOpacity
-        onPress={() => {dispatch(change())}}
-        style={{margin: 10, marginRight: 15}}
-      >
-        <View>
-          {(dark) ? (
-            <Ionicons
-              name="sunny-outline"
-              size={22} 
-              color={'white'}
-            />
-          ) : (
-            <Ionicons
-              name="moon-outline"
-              size={22} 
-            />
-          )}
-        </View>
-      </TouchableOpacity>
-    )
-  }
-
-  function transactionButton() {
-    return (
-      <View style={{
-        height: 45, 
-        width: 45, 
-        borderRadius: 45, 
-        backgroundColor: '#3DB2FF', 
-        justifyContent: 'center', 
-        alignItems: 'center',
-        position: 'absolute',
-        top: -10,
-      }}>
-        <Ionicons name='swap-horizontal' size={25} color='white'/>
-      </View>
     )
   }
   
@@ -150,7 +120,7 @@ export default function Navigations() {
             options={{
               headerRight: () => <View style={{flexDirection: 'row'}}>
                 {searchButton()}
-                {themeButton()}
+                {changeThemeButton()}
               </View>, 
               drawerType: 'front',
             }}
@@ -187,7 +157,10 @@ export default function Navigations() {
           <Stack.Screen name="Main" component={main}/>
           <Stack.Screen name="Info" component={StockInfo} options={{
               headerShown: true,
-              headerTitle: stockName,
+              headerTitle: () => <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{fontWeight: 'bold', fontSize: 16}}>{stockInfo.symbol}</Text>
+                <Text>{stockInfo.description.toLowerCase().split(" ").map(capitalize).join(" ")}</Text>
+              </View>,
               headerTitleStyle: {fontWeight: 'bold', fontSize: 20},
               headerLeft: () => goBackButton(),
               orientation: "all"

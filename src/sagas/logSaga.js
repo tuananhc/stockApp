@@ -15,6 +15,7 @@ async function logInApi(username, password) {
 };
 
 function* logInFlow(action) {
+  console.log("the action: ", action)
   const response = yield call(logInApi, action.username, action.password)
   console.log(response)
   if (response !== undefined && response.data.length > 0) { 

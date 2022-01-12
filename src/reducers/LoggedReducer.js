@@ -17,7 +17,7 @@ const loggedReducer = (state = initialState, action) => {
         case "LOG_IN_FAILED":
             return {
                 ...state,
-                user: null,
+                username: null,
                 isLoggedIn: false,
                 isLoading: false
             }

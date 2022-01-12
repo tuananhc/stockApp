@@ -1,0 +1,61 @@
+Date : 2022-01-11 10:11:41
+Directory : /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src
+Total : 31 files,  1315 codes, 4 comments, 104 blanks, all 1423 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         31 |      1,315 |          4 |        104 |      1,423 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                  | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                     |         31 |      1,315 |          4 |        104 |      1,423 |
+| actions                                                                                               |          5 |         70 |          1 |          7 |         78 |
+| components                                                                                            |          5 |        106 |          0 |          7 |        113 |
+| navigations                                                                                           |          1 |        214 |          0 |         11 |        225 |
+| reducers                                                                                              |          5 |        132 |          0 |         12 |        144 |
+| sagas                                                                                                 |          4 |        124 |          0 |         12 |        136 |
+| screens                                                                                               |         10 |        648 |          3 |         49 |        700 |
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                              | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/EntryPoint.js                | JavaScript |         21 |          0 |          6 |         27 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/constants.js         | JavaScript |          3 |          1 |          0 |          4 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/logActions.js        | JavaScript |         26 |          0 |          3 |         29 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/searchActions.js     | JavaScript |         19 |          0 |          2 |         21 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/signUpActions.js     | JavaScript |         17 |          0 |          2 |         19 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/themeActions.js      | JavaScript |          5 |          0 |          0 |          5 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/button.js         | JavaScript |         28 |          0 |          2 |         30 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/goBackButton.js   | JavaScript |         21 |          0 |          1 |         22 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/searchButton.js   | JavaScript |         21 |          0 |          1 |         22 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/text.js           | JavaScript |         16 |          0 |          1 |         17 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/textInput.js      | JavaScript |         20 |          0 |          2 |         22 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/navigations/navigations.js   | JavaScript |        214 |          0 |         11 |        225 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/CombineReducer.js   | JavaScript |         12 |          0 |          3 |         15 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/LoggedReducer.js    | JavaScript |         39 |          0 |          2 |         41 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/SearchReducer.js    | JavaScript |         38 |          0 |          2 |         40 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/ThemeReducers.js    | JavaScript |          9 |          0 |          1 |         10 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/signUpReducer.js    | JavaScript |         34 |          0 |          4 |         38 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/logSaga.js             | JavaScript |         29 |          0 |          3 |         32 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/rootSaga.js            | JavaScript |         12 |          0 |          2 |         14 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/searchSaga.js          | JavaScript |         55 |          0 |          4 |         59 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/signUpSaga.js          | JavaScript |         28 |          0 |          3 |         31 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/Drawer.js            | JavaScript |         61 |          0 |          8 |         69 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/LoginScreen.js       | JavaScript |        110 |          0 |          4 |        114 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/MainScreen.js        | JavaScript |         52 |          0 |          4 |         56 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/MarketScreen.js      | JavaScript |         72 |          0 |          4 |         76 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/NewsScreen.js        | JavaScript |         11 |          0 |          2 |         13 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/ProfileScreen.js     | JavaScript |         21 |          0 |          3 |         24 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/SignUpScreen.js      | JavaScript |        165 |          0 |          7 |        172 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/StockInfo.js         | JavaScript |        135 |          3 |         14 |        152 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/TransactionScreen.js | JavaScript |         11 |          0 |          1 |         12 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/WatchList.js         | JavaScript |         10 |          0 |          2 |         12 |
+| Total                                                                                                 |            |      1,315 |          4 |        104 |      1,423 |
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
