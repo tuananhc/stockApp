@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, Fragment, useMemo } from 'react';
-import { View, ScrollView, Dimensions, TouchableHighlight, FlatList, Image } from 'react-native';
+import { View, ScrollView, Dimensions, TouchableHighlight, FlatList, Image, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Svg, {Line, Rect, Text as T} from 'react-native-svg'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ActivityIndicator } from 'react-native-paper'
 
 import CustomText from '../components/text';
+import Button from '../components/button';
 
 const CANDLE_WIDTH = 10
 const CHART_HEIGHT = Dimensions.get('window').height * 0.4
@@ -383,7 +384,39 @@ export default function stockInfo() {
               {lineChart}
             </>
           )}
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button
+              style={{
+                marginTop: 10,
+                marginBottom: 10,
+                width: 150,
+                backgroundColor: '#FF1700',
+                height: 40,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderTopLeftRadius: 10,
+                borderBottomLeftRadius: 10
+              }}
+              onPress={() => {}}
+            >
+                <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>SELL</Text>
+            </Button>
+            <Button
+              style={{
+                marginTop: 10,
+                marginBottom: 10,
+                width: 150,
+                backgroundColor: '#00CB00',
+                height: 40,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderTopRightRadius: 10,
+                borderBottomRightRadius: 10
+              }}
+              onPress={() => {}}
+            >
+              <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>BUY</Text>
+            </Button>
           </View>
         </View>
       )}

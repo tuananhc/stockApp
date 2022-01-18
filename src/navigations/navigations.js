@@ -25,6 +25,7 @@ import CustomText from '../components/text';
 import changeThemeButton from '../components/changeThemeButton';
 import { capitalizeString } from '../utils/capitalizeString';
 import TestScreen from '../screens/TestScreen'
+import CompanyNewsScreen from '../screens/CompanyNewsScreen'
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -147,6 +148,19 @@ export default function Navigations() {
     )
   }
 
+  function StockScreen() {
+    return (
+      <TopTab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: { fontSize: 14, fontStyle: 'normal', textTransform: 'none' },
+        }}
+      >
+        <TopTab.Screen name="Info" component={StockInfo} options={{title: 'Technical analysis', }}/>
+        <TopTab.Screen name="CompanyNews" component={CompanyNewsScreen} options={{title: 'News', }}/>
+      </TopTab.Navigator>
+    )
+  }
+
   return (
     <NavigationContainer theme={dark ? MyTheme : DefaultTheme}>
       {(isLoggedIn) ? (
@@ -159,7 +173,7 @@ export default function Navigations() {
           }}
         >
           <Stack.Screen name="Main" component={main}/>
-          <Stack.Screen name="Info" component={StockInfo} 
+          <Stack.Screen name="Info" component={StockScreen} 
             options={{
               headerShown: true,
               headerTitle: () => <View style={{justifyContent: 'center', alignItems: 'center'}}>
