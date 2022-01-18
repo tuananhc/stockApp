@@ -11,7 +11,7 @@ export default function changeThemeButton() {
   return (
     <TouchableOpacity
       onPress={() => {dispatch(change())}}
-      style={{margin: 10, marginRight: 15}}
+      style={{margin: 10}}
     >
       <View>
         {(dark) ? (

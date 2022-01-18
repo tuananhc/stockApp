@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 
 const Button = props => {
   const loading = props.loading ? true : false;

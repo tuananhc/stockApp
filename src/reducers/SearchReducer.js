@@ -8,7 +8,8 @@ const initialState = {
     isGettingData: false,
     getDataSuccess: false,
     stockData: null,
-    stocksFound: null
+    stocksFound: null,
+    quote: null
 }
 
 const searchReducer = (state = initialState, action) => {
@@ -49,14 +50,16 @@ const searchReducer = (state = initialState, action) => {
                 ...state,
                 stockData: action.data,
                 isGettingData: false,
-                getDataSuccess: true
+                getDataSuccess: true,
+                quote: action.quote
             }
         case "STOCK_DATA_NOT_FOUND":
             return {
                 ...state,
                 stockData: null,
                 isGettingData: false,
-                getDataSuccess: false
+                getDataSuccess: false,
+                quote: null
             }
         default: 
             return state

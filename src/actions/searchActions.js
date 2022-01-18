@@ -28,18 +28,22 @@ export const chooseStock = (symbol, description) => {
     }
 }
 
-export const getStockDataRequest = (symbol, description) => {
+export const getStockDataRequest = (symbol, description, resolution, from, to) => {
     return {
         type: 'GET_STOCK_DATA_REQUEST',
         symbol: symbol,
-        description: description
+        description: description,
+        resolution: resolution,
+        from: from,
+        to: to
     }
 }
 
-export const stockDataFound = (data) => {
+export const stockDataFound = (data, quote) => {
     return {
         type: 'STOCK_DATA_FOUND',
-        data: data
+        data: data,
+        quote: quote
     }
 }
 

@@ -19,9 +19,12 @@ import WatchList from '../screens/WatchList';
 import searchButton from '../components/searchButton';
 import StockInfo from '../screens/StockInfo'
 import goBackButton from '../components/goBackButton';
+import starButton from '../components/starButton';
 import Transaction from '../screens/TransactionScreen';
 import CustomText from '../components/text';
 import changeThemeButton from '../components/changeThemeButton';
+import { capitalizeString } from '../utils/capitalizeString';
+import TestScreen from '../screens/TestScreen'
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -44,16 +47,13 @@ export default function Navigations() {
   var isLoggedIn = useSelector(state => state.loggedReducer.isLoggedIn)
   const dark = useSelector(state => state.theme)
   const stockInfo = useSelector(state => state.stock)
-  const dispatch = useDispatch()
 
-  function capitalize(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1)
-  }
-  
   function main() {
     return (
       <BottomTab.Navigator screenOptions={({ route }) => ({
-        headerRight: () => changeThemeButton(), 
+        headerRight: () => <View style={{flexDirection: 'row', marginRight: 10}}>
+          {changeThemeButton()}
+        </View>, 
         drawerType: 'front',
         tabBarShowLabel: false,
         tabBarIcon: ({ focused, color, size }) => {
@@ -65,7 +65,7 @@ export default function Navigations() {
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person-circle' : 'person-circle-outline'
           } else if (route.name === 'Market') {
-            iconName = focused ? 'stats-chart' : 'stats-chart-outline'
+            iconName = focused ? 'ios-stats-chart-sharp' : 'stats-chart-outline'
           } else if (route.name === 'Transaction') {
             return <Ionicons name='swap-horizontal' size={size} color={'white'}/>
           }
@@ -118,12 +118,16 @@ export default function Navigations() {
             name="Main" 
             component={ MainScreen }
             options={{
-              headerRight: () => <View style={{flexDirection: 'row'}}>
+              headerRight: () => <View style={{flexDirection: 'row', marginRight: 10}}>
                 {searchButton()}
                 {changeThemeButton()}
               </View>, 
               drawerType: 'front',
             }}
+        />
+        <Drawer.Screen 
+            name="Test" 
+            component={ TestScreen }
         />
       </Drawer.Navigator>
     )
@@ -155,14 +159,19 @@ export default function Navigations() {
           }}
         >
           <Stack.Screen name="Main" component={main}/>
-          <Stack.Screen name="Info" component={StockInfo} options={{
+          <Stack.Screen name="Info" component={StockInfo} 
+            options={{
               headerShown: true,
               headerTitle: () => <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{fontWeight: 'bold', fontSize: 16}}>{stockInfo.symbol}</Text>
-                <Text>{stockInfo.description.toLowerCase().split(" ").map(capitalize).join(" ")}</Text>
+                <CustomText style={{fontWeight: 'bold', fontSize: 16}}>{stockInfo.symbol}</CustomText>
+                <CustomText>{capitalizeString(stockInfo.description)}</CustomText>
               </View>,
               headerTitleStyle: {fontWeight: 'bold', fontSize: 20},
               headerLeft: () => goBackButton(),
+              headerRight: () => <View style={{flexDirection: 'row'}}>
+                {starButton()}
+                {changeThemeButton()}
+              </View>, 
               orientation: "all"
             }}
           />

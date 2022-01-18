@@ -3,12 +3,14 @@ const initialState = {
     isLoading: false,
     username: null,
     password: null,
+    watchList: ["TSLA", "AAPL"]
 }
 
 const loggedReducer = (state = initialState, action) => {
     switch (action.type) {
         case "LOG_IN_SUCCESS":
             return {
+                ...state,
                 isLoggedIn: true,
                 isLoading: false,
                 username: action.action.username,
@@ -23,6 +25,7 @@ const loggedReducer = (state = initialState, action) => {
             }
         case "LOG_IN_REQUEST":
             return {
+                ...state,
                 isLoggedIn: false,
                 isLoading: true,
             }

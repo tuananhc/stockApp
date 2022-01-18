@@ -1,0 +1,69 @@
+Date : 2022-01-16 21:03:14
+Directory : /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src
+Total : 38 files,  1757 codes, 1 comments, 131 blanks, all 1889 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         38 |      1,757 |          1 |        131 |      1,889 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                     | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                        |         38 |      1,757 |          1 |        131 |      1,889 |
+| actions                                                                                                  |          6 |        119 |          1 |         13 |        133 |
+| components                                                                                               |          7 |        174 |          0 |         11 |        185 |
+| navigations                                                                                              |          1 |        201 |          0 |          9 |        210 |
+| reducers                                                                                                 |          6 |        196 |          0 |         15 |        211 |
+| sagas                                                                                                    |          4 |        143 |          0 |         16 |        159 |
+| screens                                                                                                  |         11 |        896 |          0 |         60 |        956 |
+| utils                                                                                                    |          2 |          7 |          0 |          1 |          8 |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                 | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/EntryPoint.js                   | JavaScript |         21 |          0 |          6 |         27 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/constants.js            | JavaScript |          4 |          1 |          0 |          5 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/logActions.js           | JavaScript |         26 |          0 |          3 |         29 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/profileActions.js       | JavaScript |         19 |          0 |          2 |         21 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/searchActions.js        | JavaScript |         48 |          0 |          6 |         54 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/signUpActions.js        | JavaScript |         17 |          0 |          2 |         19 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/actions/themeActions.js         | JavaScript |          5 |          0 |          0 |          5 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/button.js            | JavaScript |         28 |          0 |          2 |         30 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/changeThemeButton.js | JavaScript |         30 |          0 |          2 |         32 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/goBackButton.js      | JavaScript |         21 |          0 |          1 |         22 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/searchButton.js      | JavaScript |         21 |          0 |          1 |         22 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/starButton.js        | JavaScript |         37 |          0 |          2 |         39 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/text.js              | JavaScript |         16 |          0 |          1 |         17 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/components/textInput.js         | JavaScript |         21 |          0 |          2 |         23 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/navigations/navigations.js      | JavaScript |        201 |          0 |          9 |        210 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/CombineReducer.js      | JavaScript |         14 |          0 |          3 |         17 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/LoggedReducer.js       | JavaScript |         42 |          0 |          2 |         44 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/SearchReducer.js       | JavaScript |         67 |          0 |          2 |         69 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/ThemeReducers.js       | JavaScript |          9 |          0 |          1 |         10 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/profileReducer.js      | JavaScript |         30 |          0 |          3 |         33 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/reducers/signUpReducer.js       | JavaScript |         34 |          0 |          4 |         38 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/logSaga.js                | JavaScript |         29 |          0 |          3 |         32 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/rootSaga.js               | JavaScript |         12 |          0 |          2 |         14 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/searchSaga.js             | JavaScript |         74 |          0 |          8 |         82 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/sagas/signUpSaga.js             | JavaScript |         28 |          0 |          3 |         31 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/Drawer.js               | JavaScript |         61 |          0 |          8 |         69 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/LoginScreen.js          | JavaScript |        113 |          0 |          4 |        117 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/MainScreen.js           | JavaScript |         78 |          0 |          5 |         83 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/MarketScreen.js         | JavaScript |         89 |          0 |          5 |         94 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/NewsScreen.js           | JavaScript |         11 |          0 |          2 |         13 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/ProfileScreen.js        | JavaScript |         23 |          0 |          3 |         26 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/SignUpScreen.js         | JavaScript |        165 |          0 |          7 |        172 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/StockInfo.js            | JavaScript |        226 |          0 |         12 |        238 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/TestScreen.js           | JavaScript |         27 |          0 |          4 |         31 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/TransactionScreen.js    | JavaScript |         11 |          0 |          1 |         12 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/screens/WatchList.js            | JavaScript |         92 |          0 |          9 |        101 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/utils/capitalizeString.js       | JavaScript |          4 |          0 |          1 |          5 |
+| /Users/chautuananh/Desktop/Coding_projects/Personal_project/stockapp/src/utils/capitalizeWord.js         | JavaScript |          3 |          0 |          0 |          3 |
+| Total                                                                                                    |            |      1,757 |          1 |        131 |      1,889 |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

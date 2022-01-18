@@ -1,17 +1,24 @@
 import React from 'react';
 import axios from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { useSelector } from 'react-redux';
 
-async function getStockData(symbol) {
-  const response = await axios.get(`https://finnhub.io/api/v1/crypto/candle?symbol=${symbol}&resolution=W&from=1610226834&to=1641783760&token=c5nup6iad3icte5l57r0`)
+const HOUR = 3600
+const DAY = 86400
+const WEEK = 604800
+const MONTH = 2629743
+const YEAR = 31556926
+
+async function getStockData(symbol, resolution, from, to) {
+  console.log(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=c5nup6iad3icte5l57r0`)
+  const response = await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=c5nup6iad3icte5l57r0`)
     .then(function (response) {
-      console.log(response.data)
       return response
     })
     .catch(function (error) {
-      console.log(error)
+      return 
     })
+  console.log(response)
+
   return response
 };
 
@@ -21,7 +28,6 @@ async function findStock(name) {
       return response
     })
     .catch(function (error) {
-      console.log(error);
       return error
     })
   return response
@@ -29,7 +35,6 @@ async function findStock(name) {
 
 function* searchFlow(action) {
   const response = yield call(findStock, action.search)
-  console.log(response)
   if (response !== undefined && response.data !== undefined) { 
     yield put({ 
       type: "SEARCH_FOUND", 
@@ -43,17 +48,30 @@ function* searchFlow(action) {
   }
 }
 
+async function getQuotingPrice(symbol) {
+  const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=c5nup6iad3icte5l57r0`)
+    .then (function (response) {
+      return response
+    })
+    .catch (function (error) {
+      console.log(error)
+    }) 
+  return response
+}
+
 function* getStockDataFlow(action) {
-  console.log('a stock was chosen', action)
-  const response = yield call(getStockData, action.symbol)
-  if (response !== undefined && response.data !== undefined) {
-    console.log('founded')
+  const response = yield call(getStockData, action.symbol, action.resolution, action.from, action.to)
+  if (response !== undefined && response.data !== undefined && response.data.s !== 'no_data') {
+    var quote = yield call(getQuotingPrice, action.symbol)
     yield put({
       type: 'STOCK_DATA_FOUND',
-      data: response.data
+      data: response.data,
+      quote: (quote !== undefined && quote.data !== undefined) ? quote.data : null
     })
   } else {
-    console.log('what')
+    yield put({
+      type: 'STOCK_DATA_NOT_FOUND'
+    })
   }
 }
 

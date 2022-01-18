@@ -31,7 +31,7 @@ export default function DrawerContent(props) {
             label="Home page"
             onPress={() => navigation.reset({
               index: 0,
-              routes: [{ name: 'Market' }],
+              routes: [{ name: 'Test' }],
             })}            
           />
         </Drawer.Section>
