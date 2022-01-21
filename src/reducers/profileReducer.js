@@ -1,24 +1,41 @@
 const initialState = {
+  portfolio: [],
+  availableFunds: 0,
+  initialValue: 0,
   watchList: []
 }
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "UPDATE_WATCHLIST":
-      return {
-        ...state,
-        watchList: action.watchList
-      }
     case "ADD_TO_WATCHLIST":
-      state.watchList.push({symbol: action.symbol, description: action.description})
       return {
         ...state,
-        watchList: state.watchList
+        watchList: [...state.watchList, ...action.stocks]
       }
     case "REMOVE_FROM_WATCHLIST":
       return {
         ...state,
         watchList: state.watchList.filter(item => item.symbol !== action.symbol)
+      }
+    case "ADD_TO_AVAILABLE_FUNDS":
+      return {
+        ...state,
+        availableFunds: state.availableFunds + action.amount
+      }
+      case "REMOVE_FROM_AVAILABLE_FUNDS":
+        return {
+          ...state,
+          availableFunds: state.availableFunds - action.amount
+        }
+    case "ADD_TO_INITIAL_VALUE":
+      return {
+        ...state,
+        initialValue: state.initialValue + action.amount
+      }
+    case "REMOVE_FROM_INITIAL_VALUE":
+      return {
+        ...state,
+        initialValue: state.initialValue - action.amount
       }
     default:
       return state

@@ -7,11 +7,18 @@
       "password": "1",
       "DOB": "04102001",
       "watchlist": [
-        "AAPL",
-        "TSLA"
+        {
+          "symbol": "AAPL",
+          "description": "APPLE INC"
+        },
+        {
+          "symbol": "TSLA",
+          "description": "TESLA INC"
+        }
       ],
-      "availableFunds": null,
-      "ownedList": []
+      "availableFunds": 4000,
+      "portfolio": [],
+      "initialValue": 0
     }
   ],
   "stocks": []

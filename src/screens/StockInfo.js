@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, Fragment, useMemo } from 'react';
 import { View, ScrollView, Dimensions, TouchableHighlight, FlatList, Image, Text } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import Svg, {Line, Rect, Text as T} from 'react-native-svg'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -8,6 +8,7 @@ import { ActivityIndicator } from 'react-native-paper'
 
 import CustomText from '../components/text';
 import Button from '../components/button';
+import { getStockDataRequest } from '../actions/searchActions';
 
 const CANDLE_WIDTH = 10
 const CHART_HEIGHT = Dimensions.get('window').height * 0.4
@@ -29,62 +30,50 @@ const TIME = {
 }
 
 export default function stockInfo() {
-  const chart = useRef(null)
   const stock = useSelector(state => state.stock)
   const dark = useSelector(state => state.theme)
-  const [refreshing, setRefreshing] = useState(false);
+  const refreshing = stock.isGettingData
   const dispatch = useDispatch()
   const [resolution, setResolution] = useState("D")
   const [resolutionListVisible, setResolutionListVisible] = useState(false)
   const [chartType, setChartType] = useState("Candles")
   const [chartListVisible, setChartListVisible] = useState(false)
-  const color = (dark) ? 'black' : 'white'
 
-  const candleChart = useMemo(() => drawChart(stock.stockData, "Candles"), [stock.stockData])
-  const lineChart = useMemo(() => drawChart(stock.stockData, "Line"), [stock.stockData])
+  const CandleChart = useMemo(() => drawChart(stock.stockData, "Candles"), [stock.stockData])
+  const LineChart = useMemo(() => drawChart(stock.stockData, "Line"), [stock.stockData])
 
-  useEffect(() => {
-    focusOnEnd()
-  }, [candleChart])
-
-  function focusOnEnd() {
-    if (chart.current !== null) {
-      chart.current.scrollToEnd({ animated: false })
-    }
-  }
-
-  function drawCandle(open, close, high, low, num, highest, lowest) {
-    const color = (close > open ? '#06FF00' : '#FF1700')
-    var higher = (open > close ? open : close)
-    var lower = (open > close ? close : open)
+  function Candle(props) {
+    const color = (props.close > props.open ? '#06FF00' : '#FF1700')
+    var higher = (props.open > props.close ? props.open : props.close)
+    var lower = (props.open > props.close ? props.close : props.open)
     return (
-      <Fragment key={`candle${num}`}>
+      <Fragment key={`candle${props.num}`}>
         <Line
-          x1={num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
-          x2={num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
-          y1={TOP_GAP + ((highest - high) / (highest - lowest) * CHART_HEIGHT)}
-          y2={TOP_GAP + ((highest - low) / (highest - lowest) * CHART_HEIGHT)}
+          x1={props.num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
+          x2={props.num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
+          y1={TOP_GAP + ((props.highest - props.high) / (props.highest - props.lowest) * CHART_HEIGHT)}
+          y2={TOP_GAP + ((props.highest - props.low) / (props.highest - props.lowest) * CHART_HEIGHT)}
           stroke={color}
           strokeWidth={CANDLE_STROKE_WIDTH}
         />
         <Rect
-          x={num * (CANDLE_WIDTH + CANDLE_GAP) + (CANDLE_GAP - CANDLE_WIDTH) / 2 + CANDLE_GAP}
-          y={TOP_GAP + ((highest - higher) / (highest - lowest) * CHART_HEIGHT)}
+          x={props.num * (CANDLE_WIDTH + CANDLE_GAP) + (CANDLE_GAP - CANDLE_WIDTH) / 2 + CANDLE_GAP}
+          y={TOP_GAP + ((props.highest - higher) / (props.highest - props.lowest) * CHART_HEIGHT)}
           width={CANDLE_WIDTH}
-          height={(TOP_GAP + ((highest - lower) / (highest - lowest) * CHART_HEIGHT)) - (TOP_GAP + ((highest - higher) / (highest - lowest) * CHART_HEIGHT))}
+          height={(TOP_GAP + ((props.highest - lower) / (props.highest - props.lowest) * CHART_HEIGHT)) - (TOP_GAP + ((props.highest - higher) / (props.highest - props.lowest) * CHART_HEIGHT))}
           fill={color}
         />
       </Fragment>
     )
   }
 
-  function createLine(x, y) {
+  function HorizontalDashedLine(props) {
     return (
       <Line
         x1={0}
-        x2={x}
-        y1={y}
-        y2={y}
+        x2={props.x}
+        y1={props.y}
+        y2={props.y}
         strokeDasharray="2, 5"
         strokeWidth={1}
         stroke="darkgray"
@@ -92,15 +81,15 @@ export default function stockInfo() {
     )
   }
 
-  function drawLine(closes, num, highest, lowest) {
+  function ChartLine(props) {
     return (
-      <Fragment key={`line${num}`}>
-        {(num > 0) ? (
+      <Fragment key={`line${props.num}`}>
+        {(props.num > 0) ? (
           <Line
-            x1={(num - 1) * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
-            x2={(num) * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
-            y1={TOP_GAP + ((highest - closes[num - 1]) / (highest - lowest) * CHART_HEIGHT)}
-            y2={TOP_GAP + ((highest - closes[num]) / (highest - lowest) * CHART_HEIGHT)}
+            x1={(props.num - 1) * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
+            x2={(props.num) * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
+            y1={TOP_GAP + ((props.highest - props.closes[props.num - 1]) / (props.highest - props.lowest) * CHART_HEIGHT)}
+            y2={TOP_GAP + ((props.highest - props.closes[props.num]) / (props.highest - props.lowest) * CHART_HEIGHT)}
             stroke="darkgray"
             strokeWidth={CANDLE_STROKE_WIDTH}
           />
@@ -111,15 +100,15 @@ export default function stockInfo() {
     )
   }
 
-  function drawVolume(open, close, num, volume, maxVolume) {
-    const color = (close > open ? '#06FF00' : '#FF1700')
+  function Volume(props) {
+    const color = (props.close > props.open ? '#06FF00' : '#FF1700')
     return (
-      <Fragment key={`volume${num}`}>
+      <Fragment key={`volume${props.num}`}>
         <Rect
-          x={num * (CANDLE_WIDTH + CANDLE_GAP) + (CANDLE_GAP - CANDLE_WIDTH) / 2 + CANDLE_GAP}
-          y={TOP_GAP + CHART_HEIGHT + BOTTOM_GAP + GRAPH_GAP + ((1 - volume / maxVolume) * VOLUME_HEIGHT)}
+          x={props.num * (CANDLE_WIDTH + CANDLE_GAP) + (CANDLE_GAP - CANDLE_WIDTH) / 2 + CANDLE_GAP}
+          y={TOP_GAP + CHART_HEIGHT + BOTTOM_GAP + GRAPH_GAP + ((1 - props.volume / props.maxVolume) * VOLUME_HEIGHT)}
           width={CANDLE_WIDTH}
-          height={volume / maxVolume * VOLUME_HEIGHT}
+          height={props.volume / props.maxVolume * VOLUME_HEIGHT}
           fill={color}
           style={{opacity: 0.3}}
         />
@@ -127,15 +116,15 @@ export default function stockInfo() {
     )
   }
 
-  function drawDate(num, maxNum, time) {
-    var date = new Date(time * 1000)
+  function DateLine(props) {
+    var date = new Date(props.time * 1000)
     return (
-      <Fragment key={`date${num}`}>
-        {num % 10 === 0 ? (
+      <Fragment key={`date${props.num}`}>
+        {props.num % 10 === 0 ? (
           <>
             <Line
-              x1={num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
-              x2={num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
+              x1={props.num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
+              x2={props.num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
               y1={0}
               y2={TOTAL_HEIGHT}
               strokeDasharray="2, 5"
@@ -147,9 +136,9 @@ export default function stockInfo() {
               fill="darkgray"
               stroke="darkgray"
               fontSize="10"
-              x={num * (CANDLE_WIDTH + CANDLE_GAP)}
+              x={props.num * (CANDLE_WIDTH + CANDLE_GAP)}
               y={TOTAL_HEIGHT - DATE_HEIGHT / 2}
-              textAnchor={(num === 0) ? "start" : ((num === maxNum) ? "end" : "middle")}
+              textAnchor={(props.num === 0) ? "start" : ((props.num === props.maxNum) ? "end" : "middle")}
             >
               {date.toString().slice(4, 15)}
             </T>
@@ -184,43 +173,49 @@ export default function stockInfo() {
           zIndex: -1
         }}>
           <View style={{flex: 0.88, alignItems: 'flex-start'}}>
-            <ScrollView ref={chart} alwaysBounceVertical={false} centerContent={true} bounces={false}>
-              {((stock.isGettingData) ? (
-                <View style={{width: '100%', height: '100%', position: 'absolute', justifyContent: 'center', alignItems: 'center'}}>
-                  <ActivityIndicator size='large' color={(dark) ? 'white' : '#999999'} />
-                </View>
-              ) : (
+            <FlatList 
+              inverted
+              horizontal={true}
+              ListHeaderComponent={
                 <Svg 
                   height={TOTAL_HEIGHT}
                   width={Math.max(closes.length * (CANDLE_WIDTH + CANDLE_GAP), Dimensions.get('window').width * 0.88)}
                 >
                   {timestamps.map((num) => (
                     <>
-                      {drawDate(num, closes.length, times[num])}
-                      {drawVolume(opens[num], closes[num], num, volumes[num], maxVolume)}
+                      <DateLine num={num} maxNum={closes.length} time={times[num]}/>
+                      <Volume open={opens[num]} close={closes[num]} num={num} volume={volumes[num]} maxVolume={maxVolume}/>
                     </>
                   ))}
                   {(type === "Candles") ? (
                     <>
                       {timestamps.map((num) => (
-                        drawCandle(opens[num], closes[num], highs[num], lows[num], num, highest, lowest)
+                        <Candle 
+                          num={num} 
+                          open={opens[num]} 
+                          close={closes[num]} 
+                          high={highs[num]} 
+                          low={lows[num]} 
+                          highest={highest} 
+                          lowest={lowest}
+                        />
                       ))}
                     </>
                   ) : (
                     <>
                       {timestamps.map(num => 
-                        drawLine(closes, num, highest, lowest)
+                        <ChartLine closes={closes} num={num} highest={highest} lowest={lowest}/>
                       )}
                     </>
                   )}
-                  {createLine(len, TOP_GAP)}
-                  {createLine(len, TOP_GAP + CHART_HEIGHT * 1/4)}
-                  {createLine(len, TOP_GAP + CHART_HEIGHT * 2/4)}
-                  {createLine(len, TOP_GAP + CHART_HEIGHT * 3/4)}
-                  {createLine(len, TOP_GAP + CHART_HEIGHT)}
+                  <HorizontalDashedLine x={len} y={TOP_GAP}/>
+                  <HorizontalDashedLine x={len} y={TOP_GAP + CHART_HEIGHT * 1/4}/>
+                  <HorizontalDashedLine x={len} y={TOP_GAP + CHART_HEIGHT * 2/4}/>
+                  <HorizontalDashedLine x={len} y={TOP_GAP + CHART_HEIGHT * 3/4}/>
+                  <HorizontalDashedLine x={len} y={TOP_GAP + CHART_HEIGHT}/>
                 </Svg>
-              ))}
-            </ScrollView>
+              }
+            />
           </View>
           <View style={{ 
             flex: 0.12, 
@@ -232,7 +227,7 @@ export default function stockInfo() {
             <View style={{ flex: TOP_GAP/(TOTAL_HEIGHT)}}/> 
             <View style={{ flex: CHART_HEIGHT/(TOTAL_HEIGHT) * 1.25 }}>
               <View style={{ flex: 0.2, marginTop: -6 }}>
-                <CustomText style={{fontSize: 12}}>{highest}</CustomText>
+                <CustomText style={{fontSize: 12}}>{highest.toFixed(2)}</CustomText>
               </View>
               <View style={{ flex: 0.2, marginTop: -6 }}>
                 <CustomText style={{fontSize: 12}}>{(highest - (highest - lowest) * 1/4).toFixed(2)}</CustomText>
@@ -244,7 +239,7 @@ export default function stockInfo() {
                 <CustomText style={{fontSize: 12}}>{(highest - (highest - lowest) * 3/4).toFixed(2)}</CustomText>   
               </View>
               <View style={{ flex: 0.2, marginTop: -6 }}>
-                <CustomText style={{fontSize: 12}}>{lowest}</CustomText>
+                <CustomText style={{fontSize: 12}}>{lowest.toFixed(2)}</CustomText>
               </View>
             </View>
           </View>
@@ -254,173 +249,184 @@ export default function stockInfo() {
   }
 
   return (
-    <View
-      style={{flex: 1}}
-    >
-      {(stock.isGettingData) ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator size="large" color="darkgray"/>
-        </View>
-      ) : (
+    <FlatList
+      refreshing={refreshing}
+      onRefresh={() => {
+        const to = Math.round(Date.now() / 1000)
+        const from = to - TIME.MONTH * 3
+        dispatch(getStockDataRequest(stock.symbol, stock.description, resolution, from ,to))
+      }}
+      ListHeaderComponent={
         <View>
-          <View style={{margin: 20, marginLeft: 30}}>
-            <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-              <CustomText style={{fontSize: 25, fontWeight: 'bold'}}>{stock.quote.c}</CustomText>
-              <CustomText style={{fontSize: 12, marginBottom: 4}}>  USD</CustomText>
+          {(stock.isGettingData) ? (
+            <View style={{height: Dimensions.get('window').height * 0.8, justifyContent: 'center', alignItems: 'center'}}>
+              <ActivityIndicator size="large" color="darkgray"/>
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-              <Ionicons name={(stock.quote.d > 0) ? "caret-up" : "caret-down"} color={stock.quote.d > 0 ? '#00CB00' : '#FF1700'} size={15}/>
-              <CustomText style={{color: stock.quote.d > 0 ? '#00CB00' : '#FF1700'}}> {stock.quote.d} </CustomText>
-              <CustomText style={{color: stock.quote.d > 0 ? '#00CB00' : '#FF1700'}}>
-                ({stock.quote.d > 0 ? '+' : '-'}{Math.abs(stock.quote.d / stock.quote.pc * 100).toFixed(2)}%)
-              </CustomText>
-            </View>
-          </View>
-          <View style={{flexDirection: 'row'}}>
+          ) : (
             <View>
-              <TouchableHighlight
-                onPress={() => {
-                  setResolutionListVisible(!resolutionListVisible)
-                  if (chartListVisible) {
-                    setChartListVisible(false)
-                  }
-                }}
-                underlayColor= '#7F969C'
-              >
-                <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30}}>
-                  <CustomText>{resolution}</CustomText>
+              <View style={{margin: 20, marginLeft: 30}}>
+                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                  <CustomText style={{fontSize: 25, fontWeight: 'bold'}}>{stock.quote.c}</CustomText>
+                  <CustomText style={{fontSize: 12, marginBottom: 4}}>  USD</CustomText>
                 </View>
-              </TouchableHighlight>
-              <View style={{
-                position: 'absolute', 
-                opacity: (resolutionListVisible) ? 1 : 0, 
-                top: 30, 
-                left: 0,
-                width: 100,
-              }}>
-                <FlatList
-                  data={["1", "5", "15", "30", "60", "D", "W", "M"]}
-                  renderItem={({item}) => <TouchableHighlight
-                    underlayColor='#7F969C'
+                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                  <Ionicons name={(stock.quote.d > 0) ? "caret-up" : "caret-down"} color={stock.quote.d > 0 ? '#00CB00' : '#FF1700'} size={15}/>
+                  <CustomText style={{color: stock.quote.d > 0 ? '#00CB00' : '#FF1700'}}> {stock.quote.d} </CustomText>
+                  <CustomText style={{color: stock.quote.d > 0 ? '#00CB00' : '#FF1700'}}>
+                    ({stock.quote.d > 0 ? '+' : '-'}{Math.abs(stock.quote.d / stock.quote.pc * 100).toFixed(2)}%)
+                  </CustomText>
+                </View>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <View>
+                  <TouchableHighlight
                     onPress={() => {
                       setResolutionListVisible(!resolutionListVisible)
-                      setResolution(item)
+                      if (chartListVisible) {
+                        setChartListVisible(false)
+                      }
                     }}
+                    onBlur={() => setChartListVisible(false)}
+                    underlayColor= '#7F969C'
                   >
-                    <View style={{
-                      width: 100, 
-                      height: 40, 
-                      paddingLeft: 10, 
-                      justifyContent: 'center', 
-                      backgroundColor: (item === resolution) ? '#3DB2FF' : ((dark) ? '#404352' : '#B9C3C8')
-                    }}
-                    >
-                      <CustomText>{item}</CustomText>
+                    <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30}}>
+                      <CustomText>{resolution}</CustomText>
                     </View>
                   </TouchableHighlight>
-                  }
-                  keyExtractor={item => item}
-                />
-              </View>
-            </View>
-            <View>
-              <TouchableHighlight
-                onPress={() => {
-                  setChartListVisible(!chartListVisible)
-                  if (resolutionListVisible) {
-                    setResolutionListVisible(false)
-                  }
-                }}
-                underlayColor= '#7F969C'
-              >
-                <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30}}>
-                  {(chartType === "Candles") ? (
-                    <Image 
-                      source={require('../assets/candlestick1.png')} 
-                      style={{width: 25, height: 25, tintColor: (dark) ? "white" : "black"}}/>
-                  ) : (
-                    <MaterialCommunityIcons name="chart-timeline-variant" size={20} color={(dark) ? "white" : "black"}/>
-                  )}
+                  <View style={{
+                    position: 'absolute',
+                    opacity: (resolutionListVisible) ? 1 : 0, 
+                    top: 30,
+                    left: 0,
+                    width: 100,
+                  }}>
+                    <FlatList
+                      data={["1", "5", "15", "30", "60", "D", "W", "M"]}
+                      renderItem={({item}) => <TouchableHighlight
+                        underlayColor='#7F969C'
+                        onPress={() => {
+                          setResolutionListVisible(!resolutionListVisible)
+                          setResolution(item)
+                        }}
+                      >
+                        <View style={{
+                          width: 100, 
+                          height: 40, 
+                          paddingLeft: 10, 
+                          justifyContent: 'center', 
+                          backgroundColor: (item === resolution) ? '#3DB2FF' : ((dark) ? '#404352' : '#B9C3C8')
+                        }}
+                        >
+                          <CustomText>{item}</CustomText>
+                        </View>
+                      </TouchableHighlight>
+                      }
+                      keyExtractor={item => item}
+                      listKey='1'
+                    />
+                  </View>
                 </View>
-              </TouchableHighlight>
-              <View style={{
-                position: 'absolute', 
-                opacity: (chartListVisible) ? 1 : 0, 
-                top: 30, 
-                left: 0,
-                width: 100,
-              }}>
-                <FlatList
-                  data={["Candles", "Lines"]}
-                  renderItem={({item}) => <TouchableHighlight
-                    underlayColor='#7F969C'
+                <View>
+                  <TouchableHighlight
                     onPress={() => {
-                      setChartListVisible(false)
-                      setChartType(item)
+                      setChartListVisible(!chartListVisible)
+                      if (resolutionListVisible) {
+                        setResolutionListVisible(false)
+                      }
                     }}
+                    underlayColor= '#7F969C'
                   >
-                    <View style={{
-                      width: 100, 
-                      height: 40, 
-                      paddingLeft: 10, 
-                      justifyContent: 'center', 
-                      backgroundColor: (item === chartType) ? '#3DB2FF' : ((dark) ? '#404352' : '#B9C3C8')
-                    }}>
-                      <CustomText>{item}</CustomText>
+                    <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30}}>
+                      {(chartType === "Candles") ? (
+                        <Image 
+                          source={require('../assets/candlestick1.png')} 
+                          style={{width: 25, height: 25, tintColor: (dark) ? "white" : "black"}}/>
+                      ) : (
+                        <MaterialCommunityIcons name="chart-timeline-variant" size={20} color={(dark) ? "white" : "black"}/>
+                      )}
                     </View>
                   </TouchableHighlight>
-                  }
-                  keyExtractor={item => item}
-                />
+                  <View style={{
+                    position: 'absolute', 
+                    opacity: (chartListVisible) ? 1 : 0, 
+                    top: 30, 
+                    left: 0,
+                    width: 100,
+                  }}>
+                    <FlatList
+                      data={["Candles", "Lines"]}
+                      renderItem={({item}) => <TouchableHighlight
+                        underlayColor='#7F969C'
+                        onPress={() => {
+                          setChartListVisible(false)
+                          setChartType(item)
+                        }}
+                      >
+                        <View style={{
+                          width: 100, 
+                          height: 40, 
+                          paddingLeft: 10, 
+                          justifyContent: 'center', 
+                          backgroundColor: (item === chartType) ? '#3DB2FF' : ((dark) ? '#404352' : '#B9C3C8')
+                        }}>
+                          <CustomText>{item}</CustomText>
+                        </View>
+                      </TouchableHighlight>
+                      }
+                      keyExtractor={item => item}
+                      listKey='2'
+                    />
+                  </View>
+                </View>
+              </View>
+              {(chartType === "Candles") ? (
+                <>
+                  {CandleChart}
+                </>
+              ) : (
+                <>
+                  {LineChart}
+                </>
+              )}
+              <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                <Button
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 10,
+                    width: 150,
+                    backgroundColor: '#FF1700',
+                    height: 40,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderTopLeftRadius: 10,
+                    borderBottomLeftRadius: 10
+                  }}
+                  onPress={() => {}}
+                >
+                    <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>SELL</Text>
+                </Button>
+                <Button
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 10,
+                    width: 150,
+                    backgroundColor: '#00CB00',
+                    height: 40,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderTopRightRadius: 10,
+                    borderBottomRightRadius: 10
+                  }}
+                  onPress={() => {}}
+                >
+                  <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>BUY</Text>
+                </Button>
               </View>
             </View>
-          </View>
-          {(chartType === "Candles") ? (
-            <>
-              {candleChart}
-            </>
-          ) : (
-            <>
-              {lineChart}
-            </>
           )}
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Button
-              style={{
-                marginTop: 10,
-                marginBottom: 10,
-                width: 150,
-                backgroundColor: '#FF1700',
-                height: 40,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderTopLeftRadius: 10,
-                borderBottomLeftRadius: 10
-              }}
-              onPress={() => {}}
-            >
-                <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>SELL</Text>
-            </Button>
-            <Button
-              style={{
-                marginTop: 10,
-                marginBottom: 10,
-                width: 150,
-                backgroundColor: '#00CB00',
-                height: 40,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderTopRightRadius: 10,
-                borderBottomRightRadius: 10
-              }}
-              onPress={() => {}}
-            >
-              <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>BUY</Text>
-            </Button>
-          </View>
         </View>
-      )}
-    </View>
+      }
+    />
   )
 }
 

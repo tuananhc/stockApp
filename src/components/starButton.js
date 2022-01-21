@@ -15,7 +15,7 @@ export default function changeThemeButton() {
       style={{marginTop: 10, marginRight: 5}}
       onPress={() => {
         if (watchList.length === 0 || !watchList.map(item => item.symbol).includes(stock.symbol)) {
-          dispatch(addToWatchList(stock.symbol, stock.description))
+          dispatch(addToWatchList([{symbol: stock.symbol, description: stock.description}]))
         } else {
           dispatch(removeFromWatchList(stock.symbol, stock.description))
         }

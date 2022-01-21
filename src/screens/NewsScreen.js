@@ -1,26 +1,32 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { FlatList, Image, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, Image, Linking, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import axios from 'axios'
 import capitalizeWord from '../utils/capitalizeWord'
 
 import CustomText from '../components/text';
-import { Button } from 'react-native-paper';
+import { ActivityIndicator, Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestNews } from '../actions/newsActions';
 import { useIsFocused } from '@react-navigation/native';
 
 export default function NewsScreen() {
-  const [news, setNews] = useState([])
-  const [category, setCategory] = useState("general")
+  // const [news, setNews] = useState([])
+  // const [category, setCategory] = useState("general")
   const [categoryListVisible, setCategoryListVisible] = useState(false)
+
+  const news = useSelector(state => state.news.data)
+  const category = useSelector(state => state.news.category)
+  const loading = useSelector(state => state.news.isGettingNews)
+
   var today = Date(Date.now()).toString().slice(4, 15)
   const dark = useSelector(state => state.theme)
   const dispatch = useDispatch()
-  const isFocused = useIsFocused()
+  const value = 1
 
-  useEffect(() => {
-    getNews(category)
-  }, [category])
+  const immutable = useMemo(() => {
+    dispatch(requestNews("general"))
+    return 2
+  }, [value])
 
   async function getNews(category) {
     console.log('getting news')
@@ -39,7 +45,9 @@ export default function NewsScreen() {
   function renderItem({item}) {
     var date = new Date(item.datetime * 1000)
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => Linking.openURL(item.url)}
+      >
         <View style={{flexDirection: 'row', marginTop: 10, }}>
           <View style={{justifyContent: 'flex-start', alignItems: 'center', flex: 0.2, margin: 10,}}>
             {item.image !== "" ? (
@@ -82,8 +90,9 @@ export default function NewsScreen() {
                     underlayColor='#7F969C'
                     onPress={() => {
                       setCategoryListVisible(!categoryListVisible)
-                      setCategory(item)
-                      getNews(item)
+                      // setCategory(item)
+                      // getNews(item)
+                      dispatch(requestNews(item))
                     }}
                   >
                     <View style={{
@@ -105,13 +114,20 @@ export default function NewsScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{ width: '100%', zIndex: -1 }}>
-        <FlatList
-          data={news}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
-      </View>
+      {(loading) ? (
+        <View style={{height: Dimensions.get('window').height * 0.7, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator color="darkgray" size="large"/>
+        </View>
+      ) : (
+        <View style={{ zIndex: -1 }}>
+          <FlatList
+            data={news}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          />
+        </View>
+      )}
+      
     </View>
   )
 }

@@ -1,81 +1,96 @@
-import { useNavigation, useIsFocused } from '@react-navigation/native';
-import React, { useRef, useEffect, useState } from 'react';
-import { Animated, FlatList, View, TouchableHighlight, LogBox } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import Svg, { Path } from 'react-native-svg'
+import {useNavigation, useIsFocused} from '@react-navigation/native';
+import React, {useRef, useEffect, useState} from 'react';
+import {
+  Animated,
+  FlatList,
+  View,
+  TouchableHighlight,
+  LogBox,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import Svg, {Path} from 'react-native-svg';
 
-import { getStockDataRequest } from '../actions/searchActions';
-import Button from '../components/button';
+import {getStockDataRequest} from '../actions/searchActions';
 import CustomText from '../components/text';
-import { capitalizeString } from '../utils/capitalizeString';
+import {capitalizeString} from '../utils/capitalizeString';
 
-const MONTH = 2629743
+const MONTH = 2629743;
 
 export default function WatchList() {
-  const watchList = useSelector(state => state.profile.watchList)
-  const dark = useSelector(state => state.theme)
-  const dispatch = useDispatch()
-  const navigator = useNavigation()
-  const AnimatedPath = Animated.createAnimatedComponent(Path)
+  const watchList = useSelector(state => state.profile.watchList);
+  const dark = useSelector(state => state.theme);
+  const dispatch = useDispatch();
+  const navigator = useNavigation();
+  const AnimatedPath = Animated.createAnimatedComponent(Path);
   const value = new Animated.Value(0);
-  const [state, setState] = useState("")
+  const [state, setState] = useState('');
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    LogBox.ignoreLogs(['Animated: `useNativeDriver`'])
-  }, [])
+    LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
+  }, []);
 
-  useEffect(() => {
-    setState("")
-  }, [isFocused])
+  // useEffect(() => {
+  //   console.log(isFocused)
+  //   if (isFocused) {
+  //     setState('')
+  //   }
+  // }, [isFocused]);
 
   function renderItem({item}) {
     return (
       <TouchableHighlight
         onPress={() => {
-          var today = Math.floor(Date.now() / 1000)
-          var resolution = "D"
-          dispatch(getStockDataRequest(item.symbol, item.description, resolution, today - MONTH * 3, today))
-          navigator.navigate("Info")
+          var today = Math.floor(Date.now() / 1000);
+          var resolution = 'D';
+          dispatch(
+            getStockDataRequest(
+              item.symbol,
+              item.description,
+              resolution,
+              today - MONTH * 3,
+              today,
+            ),
+          );
+          navigator.navigate('Info');
         }}
         style={{margin: 3, paddingLeft: 20, paddingRight: 20, padding: 5}}
-        underlayColor= {(dark) ? '#7F969C' : '#e6e6e6'}
-      >
+        underlayColor={dark ? '#7F969C' : '#e6e6e6'}>
         <View>
-          <CustomText style={{fontSize: 16, fontWeight: 'bold'}}>{item.symbol}</CustomText>
-          <CustomText style={{fontSize: 14, }}>{capitalizeString(item.description)}</CustomText>
+          <CustomText style={{fontSize: 16, fontWeight: 'bold'}}>
+            {item.symbol}
+          </CustomText>
+          <CustomText style={{fontSize: 14}}>
+            {capitalizeString(item.description)}
+          </CustomText>
         </View>
       </TouchableHighlight>
-    )
+    );
   }
 
   Animated.loop(
     Animated.sequence([
       Animated.spring(value, {toValue: 100, duration: 2000}),
-      Animated.spring(value, {toValue: 0, duration: 3000,})
-    ])
-  ).start()
+      Animated.spring(value, {toValue: 0, duration: 3000}),
+    ]),
+  ).start();
 
   const fillColor = value.interpolate({
     inputRange: [0, 100],
-    outputRange: ["#FFFFFF", "#FFFB00"]
-  })
+    outputRange: ['#FFFFFF', '#FFFB00'],
+  });
 
   const pathColor = value.interpolate({
     inputRange: [0, 100],
-    outputRange: ["#000000", "#FFFB00"]
-  })
+    outputRange: ['#000000', '#FFFB00'],
+  });
 
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
       {watchList.length === 0 ? (
-        <View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <CustomText>You're not watching any stocks at the moment</CustomText>
-          <Svg
-            width="50"
-            height="50"
-            viewBox="-120 -120 500 500"
-          >
+          <Svg width="50" height="50" viewBox="-120 -120 500 500">
             <AnimatedPath
               d="M55.688,242.322c2.882,0,6.069-0.719,9.439-2.24l59.032-32.156l59.032,32.156c3.369,1.521,6.557,2.24,9.437,2.24
               c8.933,0,14.963-6.917,14.543-18.36l-7.71-65.312l44.062-45.268c9.166-12.062,4.732-25.004-9.908-28.908l-65.53-10.529
@@ -86,17 +101,18 @@ export default function WatchList() {
               fill={fillColor}
             />
           </Svg>
-          <CustomText>Tap the star to add a stock to your watch list</CustomText>
+          <CustomText>
+            Tap the star to add a stock to your watch list
+          </CustomText>
         </View>
       ) : (
         <View style={{marginTop: 20, width: '100%'}}>
           <FlatList
             data={watchList}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
           />
         </View>
       )}
     </View>
-  )
+  );
 }

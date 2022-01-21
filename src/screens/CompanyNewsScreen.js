@@ -1,67 +1,94 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList, TouchableOpacity, View, Image } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {FlatList, TouchableOpacity, View, Image, Linking} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 import axios from 'axios';
 
 import CustomText from '../components/text';
+import {ActivityIndicator} from 'react-native-paper';
 
 export default function CompanyNewsScreen() {
-  const isFocused = useIsFocused()
-  const [news, setNews] = useState([])
-  const symbol = useSelector(state => state.stock.symbol)
+  const isFocused = useIsFocused();
+  const [news, setNews] = useState([]);
+  const symbol = useSelector(state => state.stock.symbol);
 
   useEffect(() => {
     if (isFocused) {
-      getNews(symbol)
+      getNews(symbol);
     }
-  }, [isFocused])
+  }, [isFocused]);
 
   async function getNews(symbol) {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
     var yyyy = today.getFullYear();
-    var to = yyyy + '-' + mm + '-' + dd
-    var from = (yyyy - 1) + '-' + mm + '-' + dd
-    const response = await axios.get(`https://finnhub.io/api/v1/company-news?symbol=${symbol}&from=${from}&to=${to}&token=c5nup6iad3icte5l57r0`)
-      .then(function(response) {
-        setNews(response.data)
+    var to = yyyy + '-' + mm + '-' + dd;
+    var from = yyyy - 1 + '-' + mm + '-' + dd;
+    const response = await axios
+      .get(
+        `https://finnhub.io/api/v1/company-news?symbol=${symbol}&from=${from}&to=${to}&token=c5nup6iad3icte5l57r0`,
+      )
+      .then(function (response) {
+        setNews(response.data);
       })
       .catch(function (error) {
-        return
-      })
-    return response
+        return;
+      });
+    return response;
   }
 
   function renderItem({item}) {
-    var date = Date(item.datetime * 1000)
+    var date = Date(item.datetime * 1000);
     return (
-      <TouchableOpacity>
-        <View style={{flexDirection: 'row', marginTop: 10, }}>
-          <View style={{justifyContent: 'flex-start', alignItems: 'center', flex: 0.2, margin: 10,}}>
-            {item.image !== "" ? (
-              <Image style={{width: 75, height: 75}} source={{uri: item.image}} resizeMode='center'/>
+      <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+          <View
+            style={{
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              flex: 0.2,
+              margin: 10,
+            }}>
+            {item.image !== '' ? (
+              <Image
+                style={{width: 75, height: 75}}
+                source={{uri: item.image}}
+                resizeMode="center"
+              />
             ) : (
               <></>
             )}
           </View>
           <View style={{flex: 0.8}}>
-            <CustomText style={{fontWeight: 'bold', fontSize: 14}}>{item.headline}</CustomText>
+            <CustomText style={{fontWeight: 'bold', fontSize: 14}}>
+              {item.headline}
+            </CustomText>
             <CustomText>{item.summary}</CustomText>
-            <CustomText style={{ fontStyle: 'italic', fontSize: 12 }}>{date.toString().slice(4, 15)}</CustomText>
+            <CustomText style={{fontStyle: 'italic', fontSize: 12}}>
+              {date.toString().slice(4, 15)}
+            </CustomText>
           </View>
         </View>
-      </TouchableOpacity>  
-    )
+      </TouchableOpacity>
+    );
   }
 
   return (
-    <View>
-      <FlatList
-        data={news}
-        renderItem={renderItem}
-      />
+    <View style={{flex: 1}}>
+      {news.length === 0 ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size="large" color="darkgray" />
+        </View>
+      ) : (
+        <View>
+          <FlatList
+            data={news}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          />
+        </View>
+      )}
     </View>
-  )
+  );
 }

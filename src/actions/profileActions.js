@@ -1,8 +1,7 @@
-export const addToWatchList = (symbol, description) => {
+export const addToWatchList = (stocks) => {
   return {
     type: 'ADD_TO_WATCHLIST',
-    symbol: symbol,
-    description: description
+    stocks: stocks
   }
 }
 
@@ -13,9 +12,44 @@ export const removeFromWatchList = (symbol) => {
   }
 }
 
-export const updateWatchList = (watchList) => { 
+export const addToPortfolio = (stocks) => {
   return {
-    type: 'UPDATE_WATCHLIST',
-    watchList: watchList
-  } 
-} 
+    type: 'ADD_TO_PORTFOLIO',
+    stocks: stocks,
+  }
+}
+
+export const removeFromPortfolio = (symbol) => {
+  return {
+    type: 'REMOVE_FROM_PORTFOLIO',
+    symbol: symbol
+  }
+}
+
+export const addToAvailableFunds = (amount) => {
+  return {
+    type: 'ADD_TO_AVAILABLE_FUNDS',
+    amount: amount,
+  }
+}
+
+export const removeFromAvailableFunds = (amount) => {
+  return {
+    type: 'REMOVE_FROM_AVAILABLE_FUNDS',
+    amount: amount
+  }
+}
+
+export const addToInitialValue = (amount) => {
+  return {
+    type: 'ADD_TO_INITIAL_VALUE',
+    amount: amount,
+  }
+}
+
+export const removeFromInitialValue = (amount) => {
+  return {
+    type: 'REMOVE_FROM_INITIAL_VALUE',
+    amount: amount
+  }
+}

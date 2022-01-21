@@ -26,6 +26,7 @@ import changeThemeButton from '../components/changeThemeButton';
 import { capitalizeString } from '../utils/capitalizeString';
 import TestScreen from '../screens/TestScreen'
 import CompanyNewsScreen from '../screens/CompanyNewsScreen'
+import { requestNews } from '../actions/newsActions';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -48,12 +49,13 @@ export default function Navigations() {
   var isLoggedIn = useSelector(state => state.loggedReducer.isLoggedIn)
   const dark = useSelector(state => state.theme)
   const stockInfo = useSelector(state => state.stock)
+  const dispatch = useDispatch()
 
   function main() {
     return (
       <BottomTab.Navigator screenOptions={({ route }) => ({
         headerRight: () => <View style={{flexDirection: 'row', marginRight: 10}}>
-          {changeThemeButton()}
+          {/* {changeThemeButton()} */}
         </View>, 
         drawerType: 'front',
         tabBarShowLabel: false,
@@ -71,6 +73,7 @@ export default function Navigations() {
             return <Ionicons name='swap-horizontal' size={size} color={'white'}/>
           }
           return <>
+
             <Ionicons name={iconName} size={size} color={color}/>
             <CustomText style={{fontSize: 10}}>{route.name}</CustomText>
           </>
@@ -121,7 +124,7 @@ export default function Navigations() {
             options={{
               headerRight: () => <View style={{flexDirection: 'row', marginRight: 10}}>
                 {searchButton()}
-                {changeThemeButton()}
+                {/* {changeThemeButton()} */}
               </View>, 
               drawerType: 'front',
             }}
@@ -155,7 +158,7 @@ export default function Navigations() {
           tabBarLabelStyle: { fontSize: 14, fontStyle: 'normal', textTransform: 'none' },
         }}
       >
-        <TopTab.Screen name="Info" component={StockInfo} options={{title: 'Technical analysis', }}/>
+        <TopTab.Screen name="StockInfo" component={StockInfo} options={{title: 'Technical analysis', }}/>
         <TopTab.Screen name="CompanyNews" component={CompanyNewsScreen} options={{title: 'News', }}/>
       </TopTab.Navigator>
     )
@@ -184,7 +187,7 @@ export default function Navigations() {
               headerLeft: () => goBackButton(),
               headerRight: () => <View style={{flexDirection: 'row'}}>
                 {starButton()}
-                {changeThemeButton()}
+                {/* {changeThemeButton()} */}
               </View>, 
               orientation: "all"
             }}

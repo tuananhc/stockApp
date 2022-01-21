@@ -1,18 +1,21 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Avatar, Drawer } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
-import CustomText from '../components/text';
+import { Switch } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core';
 import { logOut } from '../actions/logActions';
+import { change } from '../actions/themeActions'
+
+import CustomText from '../components/text';
 
 export default function DrawerContent(props) {
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const username = useSelector(state => state.loggedReducer.username)
+  const dark = useSelector(state => state.theme)
 
   return (
     <View style={{ flex: 1 }}>
@@ -37,7 +40,13 @@ export default function DrawerContent(props) {
         </Drawer.Section>
 
         <Drawer.Section>
-          
+          <View style={{ flexDirection: 'row', paddingLeft: 20, paddingRight: 20, justifyContent: 'space-between', alignItems: 'center'}}>
+            <CustomText>Dark mode</CustomText>
+            <Switch value={dark} onValueChange={() => dispatch(change())}/>
+          </View>
+        </Drawer.Section>
+
+        <Drawer.Section>
           <DrawerItem
             icon={() => <Ionicons name='log-out-outline' size={22} color={'gray'} style={{transform: [{rotateY: '180deg'}], marginRight: -15}}/>}
             label="Log out"
