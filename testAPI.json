@@ -17,8 +17,17 @@
         }
       ],
       "availableFunds": 4000,
-      "portfolio": [],
-      "initialValue": 0
+      "portfolio": [
+        {
+          "symbol": "AAPL",
+          "amount": 1
+        },
+        {
+          "symbol": "TSLA",
+          "amount": 1
+        }
+      ],
+      "initialValue": 160
     }
   ],
   "stocks": []

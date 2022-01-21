@@ -2,15 +2,20 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from "@react-navigation/core"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { stockDataNotFound } from '../actions/searchActions';
 
 export default function goBackButton() {
   const navigation = useNavigation()
   const dark = useSelector(state => state.theme)
+  const dispatch = useDispatch()
   return (
     <View>
       <TouchableOpacity
-        onPress={() => navigation.goBack()}
+        onPress={() => {
+          navigation.goBack()
+          dispatch(stockDataNotFound())
+        }}
         style={{margin: 10, marginRight: 5}}
       >
         <View>

@@ -172,7 +172,7 @@ export default function stockInfo() {
           borderBottomWidth: 2,
           zIndex: -1
         }}>
-          <View style={{flex: 0.88, alignItems: 'flex-start'}}>
+          <View style={{ flex: 0.86 }}>
             <FlatList 
               inverted
               horizontal={true}
@@ -218,11 +218,12 @@ export default function stockInfo() {
             />
           </View>
           <View style={{ 
-            flex: 0.12, 
+            flex: 0.14, 
             flexWrap: 'nowrap', 
             borderColor: 'darkgray', 
             borderLeftWidth: 2, 
-            paddingLeft: 2 
+            paddingLeft: 2,
+            alignItems: 'center'
           }}>
             <View style={{ flex: TOP_GAP/(TOTAL_HEIGHT)}}/> 
             <View style={{ flex: CHART_HEIGHT/(TOTAL_HEIGHT) * 1.25 }}>

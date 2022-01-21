@@ -20,6 +20,12 @@ export default function MarketScreen() {
   const dispatch = useDispatch();
   const stock = useSelector(state => state.stock)
 
+  useEffect(() => {
+    if (stock.getDataSuccess) {
+      navigator.navigate("Info")
+    }
+  }, [stock.getDataSuccess])
+
   function renderItem({item}) {
     return (
       <TouchableHighlight
@@ -27,7 +33,6 @@ export default function MarketScreen() {
           var today = Math.floor(Date.now() / 1000)
           var resolution = "D"
           dispatch(getStockDataRequest(item.symbol, item.description, resolution, today - MONTH * 3, today))
-          navigator.navigate("Info")
         }}
         style={{margin: 3, paddingLeft: 20, paddingRight: 20, padding: 5}}
         underlayColor= {(dark) ? '#7F969C' : '#e6e6e6'}
