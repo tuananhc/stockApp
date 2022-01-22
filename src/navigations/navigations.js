@@ -27,6 +27,7 @@ import { capitalizeString } from '../utils/capitalizeString';
 import TestScreen from '../screens/TestScreen'
 import CompanyNewsScreen from '../screens/CompanyNewsScreen'
 import { requestNews } from '../actions/newsActions';
+import CompanyProfileScreen from '../screens/CompanyProfileScreen';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -146,7 +147,7 @@ export default function Navigations() {
         }}
       >
         <TopTab.Screen name="Search" component={MarketScreen}/>
-        <TopTab.Screen name="WatchList" component={WatchList} options={{title: 'Watch list', }}/>
+        <TopTab.Screen name="WatchList" component={WatchList} options={{ title: 'Favourites', }}/>
       </TopTab.Navigator>
     )
   }
@@ -154,11 +155,13 @@ export default function Navigations() {
   function StockScreen() {
     return (
       <TopTab.Navigator
+        initialRouteName="StockInfo"
         screenOptions={{
           tabBarLabelStyle: { fontSize: 14, fontStyle: 'normal', textTransform: 'none' },
         }}
       >
-        <TopTab.Screen name="StockInfo" component={StockInfo} options={{title: 'Technical analysis', }}/>
+        <TopTab.Screen name="CompanyProfile" component={CompanyProfileScreen} options={{title: 'Profile'}}/>
+        <TopTab.Screen name="StockInfo" component={StockInfo} options={{title: 'Analysis'}}/>
         <TopTab.Screen name="CompanyNews" component={CompanyNewsScreen} options={{title: 'News', }}/>
       </TopTab.Navigator>
     )

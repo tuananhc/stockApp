@@ -17,8 +17,6 @@ async function getStockData(symbol, resolution, from, to) {
     .catch(function (error) {
       return 
     })
-  console.log(response)
-
   return response
 };
 
@@ -51,7 +49,6 @@ function* searchFlow(action) {
 async function getQuotingPrice(symbol) {
   const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=c5nup6iad3icte5l57r0`)
     .then (function (response) {
-      console.log(response)
       return response
     })
     .catch (function (error) {
@@ -62,7 +59,6 @@ async function getQuotingPrice(symbol) {
 
 function* getStockDataFlow(action) {
   const response = yield call(getStockData, action.symbol, action.resolution, action.from, action.to)
-  console.log(action, response)
   if (response !== undefined && response.data !== undefined && response.data.s !== 'no_data') {
     var quote = yield call(getQuotingPrice, action.symbol)
     yield put({

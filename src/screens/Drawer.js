@@ -42,7 +42,7 @@ export default function DrawerContent(props) {
         <Drawer.Section>
           <View style={{ flexDirection: 'row', paddingLeft: 20, paddingRight: 20, justifyContent: 'space-between', alignItems: 'center'}}>
             <CustomText>Dark mode</CustomText>
-            <Switch value={dark} onValueChange={() => dispatch(change())}/>
+            <Switch value={dark} onValueChange={() => dispatch(change())} style={{transform: [{ scaleX: .8 }, { scaleY: .8 }]}}/>
           </View>
         </Drawer.Section>
 

@@ -22,20 +22,7 @@ export default function WatchList() {
   const dispatch = useDispatch();
   const navigator = useNavigation();
   const AnimatedPath = Animated.createAnimatedComponent(Path);
-  const value = new Animated.Value(0);
-  const [state, setState] = useState('');
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(isFocused)
-  //   if (isFocused) {
-  //     setState('')
-  //   }
-  // }, [isFocused]);
+  const [value] = useState(new Animated.Value(0))
 
   function renderItem({item}) {
     return (
@@ -70,8 +57,8 @@ export default function WatchList() {
 
   Animated.loop(
     Animated.sequence([
-      Animated.spring(value, {toValue: 100, duration: 2000}),
-      Animated.spring(value, {toValue: 0, duration: 3000}),
+      Animated.spring(value, {toValue: 100, duration: 2000, useNativeDriver: true}),
+      Animated.spring(value, {toValue: 0, duration: 3000, useNativeDriver: true}),
     ]),
   ).start();
 

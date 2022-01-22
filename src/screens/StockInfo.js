@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef, Fragment, useMemo } from 'react';
-import { View, ScrollView, Dimensions, TouchableHighlight, FlatList, Image, Text } from 'react-native';
+import React, { useState, Fragment, useMemo } from 'react';
+import { View, Dimensions, TouchableHighlight, FlatList, Image, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import Svg, {Line, Rect, Text as T} from 'react-native-svg'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ActivityIndicator } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'; 
 
 import CustomText from '../components/text';
 import Button from '../components/button';
@@ -38,6 +39,7 @@ export default function stockInfo() {
   const [resolutionListVisible, setResolutionListVisible] = useState(false)
   const [chartType, setChartType] = useState("Candles")
   const [chartListVisible, setChartListVisible] = useState(false)
+  const navigation = useNavigation()
 
   const CandleChart = useMemo(() => drawChart(stock.stockData, "Candles"), [stock.stockData])
   const LineChart = useMemo(() => drawChart(stock.stockData, "Line"), [stock.stockData])
@@ -47,7 +49,7 @@ export default function stockInfo() {
     var higher = (props.open > props.close ? props.open : props.close)
     var lower = (props.open > props.close ? props.close : props.open)
     return (
-      <Fragment key={`candle${props.num}`}>
+      <Fragment>
         <Line
           x1={props.num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
           x2={props.num * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
@@ -83,7 +85,7 @@ export default function stockInfo() {
 
   function ChartLine(props) {
     return (
-      <Fragment key={`line${props.num}`}>
+      <Fragment>
         {(props.num > 0) ? (
           <Line
             x1={(props.num - 1) * (CANDLE_WIDTH + CANDLE_GAP) + CANDLE_GAP / 2 + CANDLE_GAP}
@@ -103,7 +105,7 @@ export default function stockInfo() {
   function Volume(props) {
     const color = (props.close > props.open ? '#06FF00' : '#FF1700')
     return (
-      <Fragment key={`volume${props.num}`}>
+      <Fragment>
         <Rect
           x={props.num * (CANDLE_WIDTH + CANDLE_GAP) + (CANDLE_GAP - CANDLE_WIDTH) / 2 + CANDLE_GAP}
           y={TOP_GAP + CHART_HEIGHT + BOTTOM_GAP + GRAPH_GAP + ((1 - props.volume / props.maxVolume) * VOLUME_HEIGHT)}
@@ -119,7 +121,7 @@ export default function stockInfo() {
   function DateLine(props) {
     var date = new Date(props.time * 1000)
     return (
-      <Fragment key={`date${props.num}`}>
+      <Fragment>
         {props.num % 10 === 0 ? (
           <>
             <Line
@@ -182,10 +184,10 @@ export default function stockInfo() {
                   width={Math.max(closes.length * (CANDLE_WIDTH + CANDLE_GAP), Dimensions.get('window').width * 0.88)}
                 >
                   {timestamps.map((num) => (
-                    <>
-                      <DateLine num={num} maxNum={closes.length} time={times[num]}/>
-                      <Volume open={opens[num]} close={closes[num]} num={num} volume={volumes[num]} maxVolume={maxVolume}/>
-                    </>
+                    <Fragment key={num}>
+                      <DateLine num={num} maxNum={closes.length} time={times[num]} key={`date${num}`}/>
+                      <Volume open={opens[num]} close={closes[num]} num={num} volume={volumes[num]} maxVolume={maxVolume} key={`volume${num}`}/>
+                    </Fragment>
                   ))}
                   {(type === "Candles") ? (
                     <>
@@ -198,13 +200,14 @@ export default function stockInfo() {
                           low={lows[num]} 
                           highest={highest} 
                           lowest={lowest}
+                          key={`candle${num}`}
                         />
                       ))}
                     </>
                   ) : (
                     <>
                       {timestamps.map(num => 
-                        <ChartLine closes={closes} num={num} highest={highest} lowest={lowest}/>
+                        <ChartLine closes={closes} num={num} highest={highest} lowest={lowest} key={`line${num}`}/>
                       )}
                     </>
                   )}
@@ -259,7 +262,7 @@ export default function stockInfo() {
       }}
       ListHeaderComponent={
         <View>
-          {(stock.isGettingData) ? (
+          {(stock.isGettingData && stock.getDataSuccessful) ? (
             <View style={{height: Dimensions.get('window').height * 0.8, justifyContent: 'center', alignItems: 'center'}}>
               <ActivityIndicator size="large" color="darkgray"/>
             </View>
@@ -402,7 +405,7 @@ export default function stockInfo() {
                     borderTopLeftRadius: 10,
                     borderBottomLeftRadius: 10
                   }}
-                  onPress={() => {}}
+                  onPress={() => {navigation.navigate("Transaction")}}
                 >
                     <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>SELL</Text>
                 </Button>
@@ -418,7 +421,7 @@ export default function stockInfo() {
                     borderTopRightRadius: 10,
                     borderBottomRightRadius: 10
                   }}
-                  onPress={() => {}}
+                  onPress={() => {navigation.navigate("Transaction")}}
                 >
                   <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>BUY</Text>
                 </Button>
