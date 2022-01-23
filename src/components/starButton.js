@@ -3,7 +3,7 @@ import { RefreshControl, TouchableOpacity, Image } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
 import { addToWatchList, removeFromWatchList } from '../actions/profileActions';
 
-export default function changeThemeButton() {
+export default function Star() {
   const dark = useSelector(state => state.theme)
   const stock = useSelector(state => state.stock)
   const watchList = useSelector(state => state.profile.watchList)
@@ -12,7 +12,7 @@ export default function changeThemeButton() {
 
   return (
     <TouchableOpacity
-      style={{marginTop: 10, marginRight: 5}}
+      style={{marginRight: 5}}
       onPress={() => {
         if (watchList.length === 0 || !watchList.map(item => item.symbol).includes(stock.symbol)) {
           dispatch(addToWatchList([{symbol: stock.symbol, description: stock.description}]))

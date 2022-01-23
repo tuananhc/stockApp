@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Animated, View, TouchableOpacity, Dimensions } from 'react-native';
 
 export default function CustomTabBar({ state, descriptors, navigation, position }) {
-  const width = Dimensions.get('window').width - 20
+  const width = Dimensions.get('window').width
   const [translateX] = useState(new Animated.Value(0))
   
   function translateTab(index) {
@@ -76,6 +76,7 @@ export default function CustomTabBar({ state, descriptors, navigation, position 
             onPress={onPress}
             onLongPress={onLongPress}
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}
+            key={index}
           >
             <Animated.Text style={{ fontWeight: isFocused ? "bold" : "normal", color: 'white'}}>
               {label}

@@ -1,83 +1,44 @@
-import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 import CustomText from '../components/text';
 
 export default function MainScreen() {
-  const navigation = useNavigation();
-  const axios = require('axios').default
-  const [text, setText] = useState([])
-  
-  function getPrice() {
-    axios.get('http://localhost:3000/users?username=nottuananh&password=1')
-    .then(function(response) {
-      if (response.data.length > 0) {
-        setText(JSON.stringify(response.data))
-        console.log(response.data)
-      } else {
-        setText("There is none bitch")
-      }
-    })
-    .catch(function (error) {
-      setText(error[0])
-    })
-    console.log('dcmm')
-  }
 
-  async function find() {
-    const response = await axios.get("https://finnhub.io/api/v1/search")
-      .then(function (response) {
-        console.log(response)
-        return response
-      })
-      .catch(function (error) {
-        console.log(error);
-        return error
-      })
+  function renderItem({item}) {
+    return (
+      <View
+        style={{
+          height: 150,
+          width: 150,
+          borderRadius: 10,
+          marginRight: 20
+        }}>
+        <LinearGradient
+          colors={['#f3f3f3', '#cccccc']}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}}
+          style={{
+            height: 150,
+            width: 150,
+            borderRadius: 10,
+          }}/>
+      </View>
+    )
   }
 
   return (
-    <>
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <CustomText onPress={() => {navigation.navigate('Login')}}>The main screen</CustomText>
-      <TouchableOpacity
-        onPress={() => getPrice()}
-      >
-        <View style={{
-          width: 75,
-          height: 30,
-          backgroundColor: '#3DB2FF',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: 5,
-          marginTop: 30
-        }}>
-          <Text style={{color: 'white'}}>Get price</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => find()}
-      >
-        <View style={{
-          width: 75,
-          height: 30,
-          backgroundColor: '#3DB2FF',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: 5,
-          marginTop: 30
-        }}>
-          <Text style={{color: 'white'}}>Get shid on</Text>
-        </View>
-      </TouchableOpacity>
-      <CustomText>this is my fking text</CustomText>
-      <CustomText>{text}</CustomText>
-      </View>  
-    </>
-  )
+    <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{marginTop: 20}}>
+        <FlatList
+          data={[1,2,3,4,5]}
+          renderItem={renderItem}
+          key={({item}) => item}
+          horizontal={true}
+        />
+      </View>
+      
+    </SafeAreaView>
+  );
 }

@@ -19,14 +19,11 @@ import WatchList from '../screens/WatchList';
 import searchButton from '../components/searchButton';
 import StockInfo from '../screens/StockInfo'
 import goBackButton from '../components/goBackButton';
-import starButton from '../components/starButton';
+import Star from '../components/starButton';
 import Transaction from '../screens/TransactionScreen';
 import CustomText from '../components/text';
-import changeThemeButton from '../components/changeThemeButton';
 import { capitalizeString } from '../utils/capitalizeString';
-import TestScreen from '../screens/TestScreen'
 import CompanyNewsScreen from '../screens/CompanyNewsScreen'
-import { requestNews } from '../actions/newsActions';
 import CompanyProfileScreen from '../screens/CompanyProfileScreen';
 import CustomTabBar from '../components/CustomTabBar';
 
@@ -131,10 +128,6 @@ export default function Navigations() {
               drawerType: 'front',
             }}
         />
-        <Drawer.Screen 
-            name="Test" 
-            component={ TestScreen }
-        />
       </Drawer.Navigator>
     )
   }
@@ -190,10 +183,7 @@ export default function Navigations() {
               </View>,
               headerTitleStyle: {fontWeight: 'bold', fontSize: 20},
               headerLeft: () => goBackButton(),
-              headerRight: () => <View style={{flexDirection: 'row'}}>
-                {starButton()}
-                {/* {changeThemeButton()} */}
-              </View>, 
+              headerRight: () => <Star/>,
               orientation: "all"
             }}
           />
