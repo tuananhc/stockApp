@@ -13,7 +13,7 @@ export default function goBackButton() {
     <View>
       <TouchableOpacity
         onPress={() => {
-          navigation.goBack()
+          navigation.navigate("Market")
           dispatch(stockDataNotFound())
         }}
         style={{margin: 10, marginRight: 5}}

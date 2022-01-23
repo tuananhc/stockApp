@@ -28,6 +28,7 @@ import TestScreen from '../screens/TestScreen'
 import CompanyNewsScreen from '../screens/CompanyNewsScreen'
 import { requestNews } from '../actions/newsActions';
 import CompanyProfileScreen from '../screens/CompanyProfileScreen';
+import CustomTabBar from '../components/CustomTabBar';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -159,6 +160,7 @@ export default function Navigations() {
         screenOptions={{
           tabBarLabelStyle: { fontSize: 14, fontStyle: 'normal', textTransform: 'none' },
         }}
+        tabBar={props => <CustomTabBar {...props} />}
       >
         <TopTab.Screen name="CompanyProfile" component={CompanyProfileScreen} options={{title: 'Profile'}}/>
         <TopTab.Screen name="StockInfo" component={StockInfo} options={{title: 'Analysis'}}/>
