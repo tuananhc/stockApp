@@ -1,22 +1,25 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {
-  Text,
   View,
-  TouchableOpacity,
   SafeAreaView,
   FlatList,
-  Button,
-  TouchableWithoutFeedback,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {useSelector} from 'react-redux';
-import NeumorphicButton from '../components/NeumorphicButton';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
+import NeumorphicButton from '../components/NeumorphicButton';
 import CustomText from '../components/text';
 
 export default function MainScreen() {
   const data = useSelector(state => state.marketData);
+  const navigator = useNavigation()
+
+  useEffect(() => {
+    if (data.getHistoricalDataSuccess) {
+      navigator.navigate("HistoricalData")
+    }
+  }, [data.getHistoricalDataSuccess])
 
   function renderItem({item}) {
     return (

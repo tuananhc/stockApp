@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useMemo } from 'react';
 import { View, Dimensions, TouchableHighlight, FlatList, Image, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
-import Svg, {Line, Rect, Text as T} from 'react-native-svg'
+import Svg, { Line, Path, Rect, Text as T } from 'react-native-svg'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ActivityIndicator } from 'react-native-paper'
@@ -178,6 +178,7 @@ export default function stockInfo() {
             <FlatList 
               inverted
               horizontal={true}
+              bounces={false}
               ListHeaderComponent={
                 <Svg 
                   height={TOTAL_HEIGHT}
@@ -285,102 +286,52 @@ export default function stockInfo() {
                 <View>
                   <TouchableHighlight
                     onPress={() => {
-                      setResolutionListVisible(!resolutionListVisible)
-                      if (chartListVisible) {
-                        setChartListVisible(false)
-                      }
-                    }}
-                    onBlur={() => setChartListVisible(false)}
-                    underlayColor= '#7F969C'
-                  >
-                    <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30}}>
-                      <CustomText>{resolution}</CustomText>
-                    </View>
-                  </TouchableHighlight>
-                  <View style={{
-                    position: 'absolute',
-                    opacity: (resolutionListVisible) ? 1 : 0, 
-                    top: 30,
-                    left: 0,
-                    width: 100,
-                  }}>
-                    <FlatList
-                      data={["1", "5", "15", "30", "60", "D", "W", "M"]}
-                      renderItem={({item}) => <TouchableHighlight
-                        underlayColor='#7F969C'
-                        onPress={() => {
-                          setResolutionListVisible(!resolutionListVisible)
-                          setResolution(item)
-                        }}
-                      >
-                        <View style={{
-                          width: 100, 
-                          height: 40, 
-                          paddingLeft: 10, 
-                          justifyContent: 'center', 
-                          backgroundColor: (item === resolution) ? '#3DB2FF' : ((dark) ? '#404352' : '#B9C3C8')
-                        }}
-                        >
-                          <CustomText>{item}</CustomText>
-                        </View>
-                      </TouchableHighlight>
-                      }
-                      keyExtractor={item => item}
-                      listKey='1'
-                    />
-                  </View>
-                </View>
-                <View>
-                  <TouchableHighlight
-                    onPress={() => {
-                      setChartListVisible(!chartListVisible)
-                      if (resolutionListVisible) {
-                        setResolutionListVisible(false)
+                      if (chartType === "Candles") {
+                        setChartType("Line")
+                      } else {
+                        setChartType("Candles")
                       }
                     }}
                     underlayColor= '#7F969C'
                   >
                     <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30}}>
                       {(chartType === "Candles") ? (
-                        <Image 
-                          source={require('../assets/candlestick1.png')} 
-                          style={{width: 25, height: 25, tintColor: (dark) ? "white" : "black"}}/>
+                        <Svg viewbox="0 0 24 24" width={16} height={16} strokeWidth={0}>
+                          <Path
+                            d="M18 24c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1s1 .4 1 1v22c0 .6-.4 1-1 1zM6 24c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1s1 .4 1 1v22c0 .6-.4 1-1 1zM3 7h6c.6 0 1 .4 1 1v11c0 .6-.4 1-1 1H3c-.6 0-1-.4-1-1V8c0-.6.4-1 1-1zM8 20H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2zM4 9v9h4V9H4zM15 4h6c.6 0 1 .4 1 1v11c0 .6-.4 1-1 1h-6c-.6 0-1-.4-1-1V5c0-.6.4-1 1-1zM20 17h-4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2zM16 6v9h4V6h-4z"
+                            strokeWidth="0"
+                            stroke={'black'}
+                            fill={'black'}
+                          />
+                        </Svg>
                       ) : (
                         <MaterialCommunityIcons name="chart-timeline-variant" size={20} color={(dark) ? "white" : "black"}/>
                       )}
                     </View>
                   </TouchableHighlight>
-                  <View style={{
-                    position: 'absolute', 
-                    opacity: (chartListVisible) ? 1 : 0, 
-                    top: 30, 
-                    left: 0,
-                    width: 100,
-                  }}>
-                    <FlatList
-                      data={["Candles", "Lines"]}
-                      renderItem={({item}) => <TouchableHighlight
-                        underlayColor='#7F969C'
+                </View>
+                <View>
+                  <FlatList
+                    data={["1", "5", "15", "30", "60", "D", "W", "M"]}
+                    horizontal={true}
+                    bounces={false}
+                    renderItem={({item}) => <TouchableHighlight
                         onPress={() => {
-                          setChartListVisible(false)
-                          setChartType(item)
+                          setResolution(item)
                         }}
+                        underlayColor= '#7F969C'
                       >
-                        <View style={{
-                          width: 100, 
-                          height: 40, 
-                          paddingLeft: 10, 
-                          justifyContent: 'center', 
-                          backgroundColor: (item === chartType) ? '#3DB2FF' : ((dark) ? '#404352' : '#B9C3C8')
-                        }}>
-                          <CustomText>{item}</CustomText>
+                        <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30 }}>
+                          <CustomText style={{
+                            fontWeight: item === resolution ? 'bold' : 'normal',
+                            color: item === resolution ? '#3DB2FF' : 'black'
+                          }}>{item}</CustomText>
                         </View>
                       </TouchableHighlight>
-                      }
-                      keyExtractor={item => item}
-                      listKey='2'
-                    />
-                  </View>
+                    }
+                    keyExtractor={item => item}
+                    listKey='1'
+                  />
                 </View>
               </View>
               {(chartType === "Candles") ? (

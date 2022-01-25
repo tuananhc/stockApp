@@ -62,6 +62,7 @@ function* logInFlow(action) {
   const response = yield call(logInApi, action.username, action.password)
   if (response !== undefined && response.data.length > 0) { 
     yield put({ type: "LOG_IN_SUCCESS", action })
+    yield put({ type: "REQUEST_NEWS", category: "general" })
     yield put({ type: "ADD_TO_WATCHLIST", stocks: response.data[0].watchlist })
     yield put({ type: "ADD_TO_AVAILABLE_FUNDS", amount: response.data[0].availableFunds })
     yield put({ type: "ADD_TO_PORTFOLIO", stocks: response.data[0].portfolio })

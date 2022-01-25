@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getHistoricalData } from '../actions/marketActions';
 import CustomText from './text';
 
 export default function NeumorphicButton(props) {
   const [isPressed, setPressed] = useState(false)
   const gradientColor = isPressed ? ['#cccccc', '#f3f3f3'] : ['#f3f3f3', '#cccccc']
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() 
 
   return (
     <TouchableWithoutFeedback

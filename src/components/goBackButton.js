@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/core"
 import { useDispatch, useSelector } from 'react-redux';
 import { stockDataNotFound } from '../actions/searchActions';
 
-export default function goBackButton() {
+export default function GoBackButton() {
   const navigation = useNavigation()
   const dark = useSelector(state => state.theme)
   const dispatch = useDispatch()

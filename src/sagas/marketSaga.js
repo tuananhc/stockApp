@@ -1,5 +1,10 @@
+import axios from 'axios';
+import { call, put, takeLatest } from 'redux-saga/effects';
+
 async function getHistoricalData(symbol) {
-  symbol = symbol.slice(1)
+  if (symbol.length !== 6) {
+    symbol = "%5E" + symbol.slice(1)
+  }
   const response = await axios.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}?apikey=187da714693a7788f7a323b4930dbec0`)
     .then (function (response) {
       return response
@@ -15,7 +20,7 @@ function* getHistoricalDataFlow(action) {
   if (response !== undefined && response.data !== undefined && response.data.s !== 'no_data') {
     yield put({
       type: 'HISTORICAL_DATA_FOUND',
-      data: response.data,
+      data: response.data.historical,
     })
   } else {
     yield put({

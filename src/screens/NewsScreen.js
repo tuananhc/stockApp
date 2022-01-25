@@ -10,37 +10,16 @@ import { requestNews } from '../actions/newsActions';
 import { useIsFocused } from '@react-navigation/native';
 
 export default function NewsScreen() {
-  // const [news, setNews] = useState([])
-  // const [category, setCategory] = useState("general")
   const [categoryListVisible, setCategoryListVisible] = useState(false)
 
   const news = useSelector(state => state.news.data)
   const category = useSelector(state => state.news.category)
   const loading = useSelector(state => state.news.isGettingNews)
+  const isLoggedIn = useSelector(state => state.loggedReducer.isLoggedIn)
 
   var today = Date(Date.now()).toString().slice(4, 15)
   const dark = useSelector(state => state.theme)
   const dispatch = useDispatch()
-  const value = 1
-
-  const immutable = useMemo(() => {
-    dispatch(requestNews("general"))
-    return 2
-  }, [value])
-
-  async function getNews(category) {
-    console.log('getting news')
-    const response = axios.get(`https://finnhub.io/api/v1/news?category=${category}&token=c5nup6iad3icte5l57r0`)
-      .then(function (response) {
-        console.log(response.data)
-        setNews(response.data)
-        return response
-      })
-      .catch(function (error) {
-        return
-      })
-    return response
-  };
 
   function renderItem({item}) {
     var date = new Date(item.datetime * 1000)
@@ -90,8 +69,6 @@ export default function NewsScreen() {
                     underlayColor='#7F969C'
                     onPress={() => {
                       setCategoryListVisible(!categoryListVisible)
-                      // setCategory(item)
-                      // getNews(item)
                       dispatch(requestNews(item))
                     }}
                   >

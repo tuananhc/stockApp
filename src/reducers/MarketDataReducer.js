@@ -35,8 +35,8 @@ const marketDataReducer = (state = initialState, action) => {
     case 'HISTORICAL_DATA_FOUND':
       return {
         ...state,
-        historicalData: action.historicalData,
-        isGettingHistoricalData: true,
+        historicalData: action.data,
+        isGettingHistoricalData: false,
         getHistoricalDataSuccess: true
       }
     case 'HISTORICAL_DATA_NOT_FOUND':

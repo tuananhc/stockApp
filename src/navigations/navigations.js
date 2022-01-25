@@ -18,7 +18,7 @@ import NewsScreen from '../screens/NewsScreen';
 import WatchList from '../screens/WatchList';
 import searchButton from '../components/searchButton';
 import StockInfo from '../screens/StockInfo'
-import goBackButton from '../components/goBackButton';
+import GoBackButton from '../components/goBackButton'
 import Star from '../components/starButton';
 import Transaction from '../screens/TransactionScreen';
 import CustomText from '../components/text';
@@ -49,14 +49,11 @@ export default function Navigations() {
   var isLoggedIn = useSelector(state => state.loggedReducer.isLoggedIn)
   const dark = useSelector(state => state.theme)
   const stockInfo = useSelector(state => state.stock)
-  const dispatch = useDispatch()
+  const marketData = useSelector(state => state.marketData)
 
   function main() {
     return (
-      <BottomTab.Navigator screenOptions={({ route }) => ({
-        headerRight: () => <View style={{flexDirection: 'row', marginRight: 10}}>
-          {/* {changeThemeButton()} */}
-        </View>, 
+      <BottomTab.Navigator screenOptions={({ route }) => ({ 
         drawerType: 'front',
         tabBarShowLabel: false,
         tabBarIcon: ({ focused, color, size }) => {
@@ -73,7 +70,6 @@ export default function Navigations() {
             return <Ionicons name='swap-horizontal' size={size} color={'white'}/>
           }
           return <>
-
             <Ionicons name={iconName} size={size} color={color}/>
             <CustomText style={{fontSize: 10}}>{route.name}</CustomText>
           </>
@@ -183,7 +179,7 @@ export default function Navigations() {
                 <CustomText>{capitalizeString(stockInfo.description)}</CustomText>
               </View>,
               headerTitleStyle: {fontWeight: 'bold', fontSize: 20},
-              headerLeft: () => goBackButton(),
+              headerLeft: () => <GoBackButton/>,
               headerRight: () => <Star/>,
               orientation: "all"
             }}
