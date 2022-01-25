@@ -25,6 +25,7 @@ export default function CompanyProfileScreen() {
         `https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=c5nup6iad3icte5l57r0`
       )
       .then(function (response) {
+        console.log(response.data)
         setProfile(response.data);
       })
       .catch(function (error) {
@@ -53,7 +54,7 @@ export default function CompanyProfileScreen() {
               <CustomText style={{marginBottom: 10}}>Exchange: {profile.exchange}</CustomText>
               <CustomText style={{marginBottom: 10}}>Industry: {profile.finnhubIndustry}</CustomText>
               <CustomText style={{marginBottom: 10}}>Market capitalization: {profile.marketCapitalization}</CustomText>
-              <CustomText style={{marginBottom: 10}}>Shares outstanding: {profile.shareOutstanding.toFixed(2)}</CustomText>
+              <CustomText style={{marginBottom: 10}}>Shares outstanding: {(profile.shareOutstanding !== undefined) ? profile.shareOutstanding.toFixed(2) : ""}</CustomText>
             </View>
             
           </View>

@@ -9,10 +9,10 @@ const initialState = {
     getDataSuccess: false,
     stockData: null,
     stocksFound: null,
-    quote: null
+    quote: null,
 }
 
-const searchReducer = (state = initialState, action) => {
+const stockReducer = (state = initialState, action) => {
     switch (action.type) {
         case "SEARCH_REQUEST":
             return {
@@ -60,10 +60,10 @@ const searchReducer = (state = initialState, action) => {
                 isGettingData: false,
                 getDataSuccess: false,
                 quote: null
-            }
+            }       
         default: 
             return state
     }
 }
 
-export default searchReducer
+export default stockReducer

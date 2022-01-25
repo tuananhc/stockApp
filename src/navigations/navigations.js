@@ -26,6 +26,7 @@ import { capitalizeString } from '../utils/capitalizeString';
 import CompanyNewsScreen from '../screens/CompanyNewsScreen'
 import CompanyProfileScreen from '../screens/CompanyProfileScreen';
 import CustomTabBar from '../components/CustomTabBar';
+import HistoricalDataScreen from '../screens/HistoricalDataScreen';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -187,6 +188,7 @@ export default function Navigations() {
               orientation: "all"
             }}
           />
+          <Stack.Screen name="HistoricalData" component={HistoricalDataScreen}/>
         </Stack.Navigator>
       ) : (
         <Stack.Navigator 
