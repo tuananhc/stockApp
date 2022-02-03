@@ -152,6 +152,8 @@ export default function Navigations() {
         initialRouteName="StockInfo"
         screenOptions={{
           tabBarLabelStyle: { fontSize: 14, fontStyle: 'normal', textTransform: 'none' },
+          swipeEnabled: false,
+          tabBarOptions: {style: {backgroundColor: 'blue'}}
         }}
         tabBar={props => <CustomTabBar {...props} />}
       >

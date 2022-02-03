@@ -19,6 +19,7 @@ async function getHistoricalData(symbol, resolution) {
   } else if (resolution === '1') {
     path = "historical-chart/1min"
   }
+  console.log(`https://financialmodelingprep.com/api/v3/${path}/${symbol}?apikey=187da714693a7788f7a323b4930dbec0`)
   const response = await axios.get(`https://financialmodelingprep.com/api/v3/${path}/${symbol}?apikey=187da714693a7788f7a323b4930dbec0`)
     .then (function (response) {
       console.log(response)
@@ -57,11 +58,11 @@ function* getHistoricalDataFlow(action) {
 }
 
 function* getQuotingPriceFlow(action) {
-  const response = getQuotingPrice(action.symbol)
+  const response = yield call(getQuotingPrice, action.symbol)
   if (response !== undefined) {
     yield put({
       type: 'QUOTING_PRICE_FOUND',
-      data: price
+      data: response
     })
   }
 }

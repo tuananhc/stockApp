@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Animated, View, TouchableOpacity, Dimensions } from 'react-native';
+import { Animated, View, TouchableHighlight, Dimensions, Text } from 'react-native';
 
 export default function CustomTabBar({ state, descriptors, navigation, position }) {
   const width = Dimensions.get('window').width
@@ -7,7 +7,7 @@ export default function CustomTabBar({ state, descriptors, navigation, position 
   
   function translateTab(index) {
     Animated.spring(translateX, {
-      toValue: -width / 3 + index * width / 3, 
+      toValue: -100 + index * 100, 
       useNativeDriver: true
     }).start()
   }
@@ -19,20 +19,24 @@ export default function CustomTabBar({ state, descriptors, navigation, position 
   return (
     <View style={{ 
       flexDirection: 'row', 
-      height: 30, 
-      backgroundColor: 'gray', 
-      marginTop: 20, 
-      marginHorizontal: 10, 
+      height: 35, 
+      backgroundColor: '#BABCBF', 
+      marginTop: 10, 
+      paddingHorizontal: 3.5,
       borderRadius: 10, 
-      justifyContent: 'center'
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'baseline',
+      marginLeft: width / 2 - 307 / 2
     }}>
       <Animated.View 
         style={{ 
-          width: '30%', 
-          backgroundColor: '#3DB2FF', 
-          height: 30, 
+          width: 100, 
+          backgroundColor: '#EFF2F5', 
+          height: 28,
+          top: 3.5, 
           position: 'absolute', 
-          borderRadius: 10,
+          borderRadius: 8,
           transform: [{translateX}]
         }}
       />
@@ -68,20 +72,21 @@ export default function CustomTabBar({ state, descriptors, navigation, position 
         };
 
         return (
-          <TouchableOpacity
+          <TouchableHighlight
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}
+            style={{ width: 80, marginHorizontal: 10, height: 28, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}
             key={index}
+            underlayColor={!isFocused && "#85878A"}
           >
-            <Animated.Text style={{ fontWeight: isFocused ? "bold" : "normal", color: 'white'}}>
+            <Text style={{ fontWeight: isFocused ? "bold" : "normal"}}>
               {label}
-            </Animated.Text>
-          </TouchableOpacity>
+            </Text>
+          </TouchableHighlight>
         );
       })}
     </View>

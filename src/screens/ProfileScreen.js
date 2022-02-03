@@ -8,6 +8,7 @@ import axios from 'axios'
 import { DefaultTheme } from '@react-navigation/native';
 
 import CustomText from '../components/text';
+import { formatter } from '../utils/numberFormatter';
 
 export default function ProfileScreen() {
   const username = useSelector(state => state.loggedReducer.username);
@@ -124,7 +125,7 @@ export default function ProfileScreen() {
             }}
           >
             <CustomText style={{fontWeight: 'bold', fontSize: 20, marginBottom: 20}}>Portfolio balance</CustomText>
-            <CustomText style={{fontSize: 20, color: '#00CB00', marginBottom: 10}}>${totalValue.toFixed(2)}  </CustomText>
+            <CustomText style={{fontSize: 20, color: '#00CB00', marginBottom: 10}}>{formatter.format(totalValue)}</CustomText>
             <View style={{flexDirection: 'row'}}>
               <Ionicons 
                 name={totalValue - profile.initialValue > 0 ? "caret-up" : "caret-down"} 

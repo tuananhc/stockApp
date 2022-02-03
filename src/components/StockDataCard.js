@@ -3,11 +3,14 @@ import { View, TouchableWithoutFeedback } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHistoricalData, getQuotingPrice } from '../actions/marketActions';
+
 import CustomText from './text';
+import { formatter } from '../utils/numberFormatter';
 
 export default function StockDataCard(props) {
   const [isPressed, setPressed] = useState(false)
-  const gradientColor = isPressed ? ['#cccccc', '#f3f3f3'] : ['#f3f3f3', '#cccccc']
+  const dark = useSelector(state => state.theme)
+  const gradientColor = dark ? (isPressed ? ['#17171A', '#21232E'] : ['#21232E', '#17171A']) : (isPressed ? ['#cccccc', '#f3f3f3'] : ['#f3f3f3', '#cccccc'])
   const dispatch = useDispatch() 
   const resolution = "D"
 
@@ -43,9 +46,9 @@ export default function StockDataCard(props) {
               <CustomText style={{fontWeight: 'bold', fontSize: 18}}>{props.name}</CustomText>
             </View>
             <View style={{flex: 0.5, justifyContent: 'flex-end'}}>
-              <CustomText>{props.price.toLocaleString()}</CustomText>
+              <CustomText>{formatter.format(props.price)}</CustomText>
               <CustomText style={{color: props.change > 0 ? '#06FF00' : '#FF1700'}}>
-                {props.change.toFixed(2)} ({(props.change/props.previousClose*100).toFixed(2)})
+                {formatter.format(props.change)} ({(props.change/props.previousClose*100).toFixed(2).toLocaleString()})
               </CustomText>
             </View>
           </View>
