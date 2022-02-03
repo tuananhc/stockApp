@@ -1,12 +1,16 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, SafeAreaView, View } from 'react-native';
+import CustomText from '../components/text';
 
 export default function Transaction() {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>
-        Transaction goes here
-      </Text>
-    </View>
+    <SafeAreaView style={{flex: 1, marginHorizontal: 20}}>
+      <View style={{marginTop: 10, marginBottom: 30, paddingBottom: 5, borderBottomWidth: 1}}>
+        
+      </View>
+      <View>
+      </View>
+      
+    </SafeAreaView>
   )
 }

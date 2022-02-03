@@ -58,3 +58,10 @@ export const stockDataNotFound = () => {
     type: 'STOCK_DATA_NOT_FOUND',
   };
 };
+
+export const orderStock = (orderType) => {
+  return {
+    type: 'ORDER_STOCK',
+    orderType: orderType
+  }
+}

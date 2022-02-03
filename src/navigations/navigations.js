@@ -27,6 +27,7 @@ import CompanyNewsScreen from '../screens/CompanyNewsScreen'
 import CompanyProfileScreen from '../screens/CompanyProfileScreen';
 import CustomTabBar from '../components/CustomTabBar';
 import HistoricalDataScreen from '../screens/HistoricalDataScreen';
+import OrderScreen from '../screens/OrderScreen';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -82,9 +83,11 @@ export default function Navigations() {
         }}/>
         <BottomTab.Screen name="Market" component={Market} options={{headerShown: true}}/>
         <BottomTab.Screen name="Transaction" 
-          options={{ title: "Transaction", headerShown: false, showLabel: false,
-          tabBarButton: ({children, onPress}) => <>
-            <TouchableHighlight
+          options={{ 
+            title: "Transaction", 
+            showLabel: false,
+            headerTitle: "",
+            tabBarButton: ({children, onPress}) => <TouchableHighlight
               onPress={onPress}
               style={{
                 height: 50, 
@@ -98,8 +101,8 @@ export default function Navigations() {
               underlayColor='#008DD7'
             >
               {children}
-            </TouchableHighlight>
-          </> 
+            </TouchableHighlight>,
+            headerLeft: () => <GoBackButton/>,
           }} 
           component={Transaction}
         />
@@ -185,6 +188,7 @@ export default function Navigations() {
             }}
           />
           <Stack.Screen name="HistoricalData" component={HistoricalDataScreen}/>
+          <Stack.Screen name="Order" component={OrderScreen}/>
         </Stack.Navigator>
       ) : (
         <Stack.Navigator 

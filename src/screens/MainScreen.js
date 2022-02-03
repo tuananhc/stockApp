@@ -4,11 +4,12 @@ import {
   View,
   SafeAreaView,
   FlatList,
+  Button,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import NeumorphicButton from '../components/NeumorphicButton';
+import StockDataCard from '../components/StockDataCard';
 import CustomText from '../components/text';
 
 export default function MainScreen() {
@@ -20,10 +21,10 @@ export default function MainScreen() {
       navigator.navigate("HistoricalData")
     }
   }, [data.getHistoricalDataSuccess])
-
+  
   function renderItem({item}) {
     return (
-      <NeumorphicButton
+      <StockDataCard
         symbol={item.symbol}
         name={item.name}
         price={item.price}
@@ -51,11 +52,11 @@ export default function MainScreen() {
             </View>
 
             <CustomText style={{fontWeight: 'bold', fontSize: 20}}>
-              Forex
+              Crypto
             </CustomText>
             <View style={{marginTop: 20}}>
               <FlatList
-                data={data.forexData}
+                data={data.cryptoData}
                 renderItem={renderItem}
                 key={({item}) => item}
                 horizontal={true}
@@ -63,11 +64,11 @@ export default function MainScreen() {
             </View>
 
             <CustomText style={{fontWeight: 'bold', fontSize: 20}}>
-              Crypto
+              Forex
             </CustomText>
             <View style={{marginTop: 20}}>
               <FlatList
-                data={data.cryptoData}
+                data={data.forexData}
                 renderItem={renderItem}
                 key={({item}) => item}
                 horizontal={true}

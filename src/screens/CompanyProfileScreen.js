@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import { FlatList, TouchableOpacity, View, Image, Linking, Text } from 'react-native';
-import {useIsFocused} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { View, Image, Linking, Text } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 import CustomText from '../components/text';
@@ -25,7 +25,6 @@ export default function CompanyProfileScreen() {
         `https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=c5nup6iad3icte5l57r0`
       )
       .then(function (response) {
-        console.log(response.data)
         setProfile(response.data);
       })
       .catch(function (error) {

@@ -5,7 +5,9 @@ const initialState = {
   historicalData: null,
   isGettingHistoricalData: false,
   getHistoricalDataSuccess: false,
-  symbol: null
+  symbol: null,
+  resolution: null,
+  quote: null
 };
 
 const marketDataReducer = (state = initialState, action) => {
@@ -25,10 +27,16 @@ const marketDataReducer = (state = initialState, action) => {
         ...state,
         cryptoData: action.data,
       };
+    case 'QUOTING_PRICE_FOUND':
+      return {
+        ...state,
+        quote: action.data,
+      };
     case 'GET_HISTORICAL_DATA':
       return {
         ...state,
         symbol: action.symbol,
+        resolution: action.resolution,
         isGettingHistoricalData: true,
         getHistoricalDataSuccess: false
       }

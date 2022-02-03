@@ -6,7 +6,6 @@ import { Alert } from 'react-native';
 async function logInApi(username, password) {
   try {
     var result = await axios.get('http://localhost:3000/users?username=' + username + '&password=' + password)
-    console.log(result)
   } catch (error) {
     return undefined
   }
@@ -14,7 +13,7 @@ async function logInApi(username, password) {
 }
 
 async function getIndicesData() {
-  const indices = ["GSPC", "DJI", "IXIC", "NYA", "FTSE"]
+  const indices = ["GSPC"]//, "DJI", "IXIC", "NYA", "FTSE"]
   const result = []
   for (var symbol of indices) {
     var response = await axios.get(`https://financialmodelingprep.com/api/v3/quote/%5E${symbol}?apikey=187da714693a7788f7a323b4930dbec0`)
@@ -29,7 +28,7 @@ async function getIndicesData() {
 }
 
 async function getForexData() {
-  const indices = ["EURUSD", "USDJPY", "GBPUSD", "USDCHF"]
+  const indices = ["EURUSD"] //, "USDJPY", "GBPUSD", "USDCHF"]
   const result = []
   for (var symbol of indices) {
     var response = await axios.get(`https://financialmodelingprep.com/api/v3/quote/${symbol}?apikey=187da714693a7788f7a323b4930dbec0`)
@@ -44,7 +43,7 @@ async function getForexData() {
 }
 
 async function getCryptoData() {
-  const indices = ["BTC", "ETH", "LTC", "ADA", "DOT", "BNB", "DOGE"]
+  const indices = ["BTC"] //, "ETH", "LTC", "ADA", "DOT", "BNB", "DOGE"]
   const result = []
   for (var symbol of indices) {
     var response = await axios.get(`https://financialmodelingprep.com/api/v3/quote/${symbol}USD?apikey=187da714693a7788f7a323b4930dbec0`)
@@ -67,6 +66,7 @@ function* logInFlow(action) {
     yield put({ type: "ADD_TO_AVAILABLE_FUNDS", amount: response.data[0].availableFunds })
     yield put({ type: "ADD_TO_PORTFOLIO", stocks: response.data[0].portfolio })
     yield put({ type: "ADD_TO_INITIAL_VALUE", amount: response.data[0].initialValue })
+    // only for testing because there are only 250 calls/day
     const marketData = yield call(getIndicesData)
     const forexData = yield call(getForexData)
     const cryptoData = yield call(getCryptoData)

@@ -17,7 +17,9 @@ export default function CustomTextInput(props) {
             autoCapitalize={props.autoCapitalize}
             onBlur={props.onBlur}
             onSubmitEditing={props.onSubmitEditing}
-            value={props.value}        
+            value={props.value}       
+            keyboardType={props.keyboardType} 
+            onPressOut={props.onPressOut}
         />
     )
 }

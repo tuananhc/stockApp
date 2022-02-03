@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useMemo } from 'react';
+import React, { useState, Fragment, useMemo, useEffect } from 'react';
 import { View, Dimensions, TouchableHighlight, FlatList, Image, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import Svg, { Line, Path, Rect, Text as T } from 'react-native-svg'
@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import CustomText from '../components/text';
 import Button from '../components/button';
-import { getStockDataRequest } from '../actions/searchActions';
+import { getStockDataRequest, orderStock } from '../actions/searchActions';
 
 const CANDLE_WIDTH = 10
 const CHART_HEIGHT = Dimensions.get('window').height * 0.4
@@ -23,6 +23,7 @@ const DATE_HEIGHT = 20
 const TOTAL_HEIGHT = CHART_HEIGHT + TOP_GAP + BOTTOM_GAP + GRAPH_GAP + VOLUME_HEIGHT + DATE_HEIGHT
 
 const TIME = {
+  MINUTE: 60,
   HOUR: 3600,
   DAY: 86400,
   WEEK: 604800,
@@ -35,14 +36,17 @@ export default function stockInfo() {
   const dark = useSelector(state => state.theme)
   const refreshing = stock.isGettingData
   const dispatch = useDispatch()
-  const [resolution, setResolution] = useState("D")
-  const [resolutionListVisible, setResolutionListVisible] = useState(false)
+  const resolution = useSelector(state => stock.resolution)
   const [chartType, setChartType] = useState("Candles")
-  const [chartListVisible, setChartListVisible] = useState(false)
   const navigation = useNavigation()
 
   const CandleChart = useMemo(() => drawChart(stock.stockData, "Candles"), [stock.stockData])
   const LineChart = useMemo(() => drawChart(stock.stockData, "Line"), [stock.stockData])
+
+  useEffect(() => {
+    
+    navigation.navigate("Order")
+  }, [stock.orderType])
 
   function Candle(props) {
     const color = (props.close > props.open ? '#06FF00' : '#FF1700')
@@ -296,14 +300,7 @@ export default function stockInfo() {
                   >
                     <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30}}>
                       {(chartType === "Candles") ? (
-                        <Svg viewbox="0 0 24 24" width={16} height={16} strokeWidth={0}>
-                          <Path
-                            d="M18 24c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1s1 .4 1 1v22c0 .6-.4 1-1 1zM6 24c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1s1 .4 1 1v22c0 .6-.4 1-1 1zM3 7h6c.6 0 1 .4 1 1v11c0 .6-.4 1-1 1H3c-.6 0-1-.4-1-1V8c0-.6.4-1 1-1zM8 20H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2zM4 9v9h4V9H4zM15 4h6c.6 0 1 .4 1 1v11c0 .6-.4 1-1 1h-6c-.6 0-1-.4-1-1V5c0-.6.4-1 1-1zM20 17h-4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2zM16 6v9h4V6h-4z"
-                            strokeWidth="0"
-                            stroke={'black'}
-                            fill={'black'}
-                          />
-                        </Svg>
+                        <Image source={require("../assets/candlestick1.png")} style={{tintColor: (dark) ? "white" : "black", height: 25, width: 25}}/>
                       ) : (
                         <MaterialCommunityIcons name="chart-timeline-variant" size={20} color={(dark) ? "white" : "black"}/>
                       )}
@@ -317,14 +314,35 @@ export default function stockInfo() {
                     bounces={false}
                     renderItem={({item}) => <TouchableHighlight
                         onPress={() => {
-                          setResolution(item)
+                          if (item !== resolution) {
+                            const to = Math.round(Date.now() / 1000)
+                            var from
+                            if (item === "1") {
+                              from = to - TIME.MINUTE * 90
+                            } else if (item === "5") {
+                              from = to - TIME.MINUTE * 450
+                            } else if (item === "15") {
+                              from = to - TIME.MINUTE * 1350
+                            } else if (item === "30") {
+                              from = to - TIME.MINUTE * 2700
+                            } else if (item === "60") {
+                              from = to - TIME.HOUR * 90
+                            } else if (item === "D") {
+                              from = to - TIME.MONTH * 3
+                            } else if (item === "W") {
+                              from = to - TIME.WEEK * 90
+                            } else if (item === "M") {
+                              from = to - TIME.MONTH * 90
+                            }
+                            dispatch(getStockDataRequest(stock.symbol, stock.description, item, from ,to))
+                          }
                         }}
                         underlayColor= '#7F969C'
                       >
                         <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30 }}>
                           <CustomText style={{
                             fontWeight: item === resolution ? 'bold' : 'normal',
-                            color: item === resolution ? '#3DB2FF' : 'black'
+                            color: item === resolution ? '#3DB2FF' : (dark ? 'white' : 'black')
                           }}>{item}</CustomText>
                         </View>
                       </TouchableHighlight>
@@ -356,7 +374,9 @@ export default function stockInfo() {
                     borderTopLeftRadius: 10,
                     borderBottomLeftRadius: 10
                   }}
-                  onPress={() => {navigation.navigate("Transaction")}}
+                  onPress={() => {
+                    dispatch(orderStock("Buy"))
+                  }}
                 >
                     <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>SELL</Text>
                 </Button>
@@ -372,7 +392,9 @@ export default function stockInfo() {
                     borderTopRightRadius: 10,
                     borderBottomRightRadius: 10
                   }}
-                  onPress={() => {navigation.navigate("Transaction")}}
+                  onPress={() => {
+                    dispatch(orderStock("Sell"))                    
+                  }}
                 >
                   <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>BUY</Text>
                 </Button>

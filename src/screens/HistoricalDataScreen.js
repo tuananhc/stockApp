@@ -1,13 +1,15 @@
 import axios from 'axios';
-import React, { Fragment, useState, useMemo } from 'react';
-import { Dimensions, FlatList, View, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
-import Svg, {Line, Rect, Text as T} from 'react-native-svg'
+import React, { Fragment, useEffect, useState, useMemo } from 'react';
+import { Dimensions, FlatList, View, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import Svg, {Line, Rect, Text as T, Path} from 'react-native-svg'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import CustomText from '../components/text';
+import { getHistoricalData } from '../actions/marketActions';
 
 const CANDLE_WIDTH = 10
 const CHART_HEIGHT = Dimensions.get('window').height * 0.4
@@ -21,12 +23,13 @@ const DATE_HEIGHT = 20
 const TOTAL_HEIGHT = CHART_HEIGHT + TOP_GAP + BOTTOM_GAP + GRAPH_GAP + VOLUME_HEIGHT + DATE_HEIGHT
 
 export default function HistoricalDataScreen() {
-  const data = useSelector(state => state.marketData.historicalData)
+  const marketData = useSelector(state => state.marketData)
+  const quote = marketData.quote
+  const data = useSelector(state => state.marketData.historicalData).slice(-120)
   const dark = useSelector(state => state.theme)
-  const refreshing = data.isGettingHistoricalData
-  const [resolution, setResolution] = useState("D")
-  const [isCandleChart, setCandleChart] = useState(true)
+  const [chartType, setChartType] = useState("Candles")
   const navigator = useNavigation()
+  const dispatch = useDispatch()
 
   const CandleChart = useMemo(() => drawChart(data, "Candles"), [data])
   const LineChart = useMemo(() => drawChart(data, "Line"), [data])
@@ -189,7 +192,6 @@ export default function HistoricalDataScreen() {
                       )}
                     </Fragment>
                   ))}
-                  
                   <HorizontalDashedLine x={len} y={TOP_GAP}/>
                   <HorizontalDashedLine x={len} y={TOP_GAP + CHART_HEIGHT * 1/4}/>
                   <HorizontalDashedLine x={len} y={TOP_GAP + CHART_HEIGHT * 2/4}/>
@@ -243,9 +245,82 @@ export default function HistoricalDataScreen() {
           <Ionicons name="arrow-back" size={22} color={dark ? 'white' : 'black'}/>
         </View>
       </TouchableOpacity>
-      <>
-        {drawChart(data.reverse(), "Candles")}
-      </>
+      <View style={{margin: 20, marginLeft: 30}}>
+        <CustomText style={{fontSize: 27, fontWeight: 'bold', marginBottom: 10}}>{quote.name}</CustomText>
+        <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+          <CustomText style={{fontSize: 25, fontWeight: 'bold'}}>{quote.price.toLocaleString()}</CustomText>
+          <CustomText style={{fontSize: 12, marginBottom: 4}}>  USD</CustomText>
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+          <Ionicons name={(quote.change > 0) ? "caret-up" : "caret-down"} color={quote.change > 0 ? '#00CB00' : '#FF1700'} size={15}/>
+          <CustomText style={{color: quote.change > 0 ? '#00CB00' : '#FF1700'}}> {quote.change.toFixed(2)} </CustomText>
+          <CustomText style={{color: quote.change > 0 ? '#00CB00' : '#FF1700'}}>
+            ({quote.change > 0 ? '+' : '-'}{Math.abs(quote.changesPercentage).toFixed(2)}%)
+          </CustomText>
+        </View>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <View>
+          <TouchableHighlight
+            onPress={() => {
+              if (chartType === "Candles") {
+                setChartType("Line")
+              } else {
+                setChartType("Candles")
+              }
+            }}
+            underlayColor= '#7F969C'
+          >
+            <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30}}>
+              {(chartType === "Candles") ? (
+                <Svg viewbox="0 0 24 24" width={16} height={16} strokeWidth={0}>
+                  <Path
+                    d="M18 24c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1s1 .4 1 1v22c0 .6-.4 1-1 1zM6 24c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1s1 .4 1 1v22c0 .6-.4 1-1 1zM3 7h6c.6 0 1 .4 1 1v11c0 .6-.4 1-1 1H3c-.6 0-1-.4-1-1V8c0-.6.4-1 1-1zM8 20H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2zM4 9v9h4V9H4zM15 4h6c.6 0 1 .4 1 1v11c0 .6-.4 1-1 1h-6c-.6 0-1-.4-1-1V5c0-.6.4-1 1-1zM20 17h-4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2zM16 6v9h4V6h-4z"
+                    strokeWidth="0"
+                    stroke={'black'}
+                    fill={'black'}
+                  />
+                </Svg>
+              ) : (
+                <MaterialCommunityIcons name="chart-timeline-variant" size={20} color={(dark) ? "white" : "black"}/>
+              )}
+            </View>
+          </TouchableHighlight>
+        </View>
+        <View>
+          <FlatList
+            data={["1", "5", "15", "30", "60", "D"]}
+            horizontal={true}
+            bounces={false}
+            renderItem={({item}) => <TouchableHighlight
+            onPress={() => {
+              if (item !== marketData.resolution) {
+                dispatch(getHistoricalData(marketData.symbol, item))
+              }
+            }}
+            underlayColor= '#7F969C'
+          >
+            <View style={{justifyContent: 'center', alignItems: 'center', width: 30, height: 30 }}>
+              <CustomText style={{
+                fontWeight: item === marketData.resolution ? 'bold' : 'normal',
+                color: item === marketData.resolution ? '#3DB2FF' : (dark ? 'white' : 'black')
+              }}>{item}</CustomText>
+            </View>
+          </TouchableHighlight>}
+          keyExtractor={item => item}
+          listKey='1'
+        />
+        </View>
+      </View>
+      {(chartType === "Candles") ? (
+        <>
+          {CandleChart}
+        </>
+      ) : (
+        <>
+          {LineChart}
+        </>
+      )}
     </SafeAreaView>
   )
 }

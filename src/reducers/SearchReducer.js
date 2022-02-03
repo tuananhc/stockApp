@@ -7,9 +7,11 @@ const initialState = {
     token: "c5nup6iad3icte5l57r0",
     isGettingData: false,
     getDataSuccess: false,
+    resolution: null,
     stockData: null,
     stocksFound: null,
     quote: null,
+    orderType: 'Buy'
 }
 
 const stockReducer = (state = initialState, action) => {
@@ -41,6 +43,7 @@ const stockReducer = (state = initialState, action) => {
             return {
                 ...state,
                 symbol: action.symbol,
+                resolution: action.resolution,
                 description: action.description,
                 isGettingData: true,
                 getDataSuccess: false
@@ -60,7 +63,12 @@ const stockReducer = (state = initialState, action) => {
                 isGettingData: false,
                 getDataSuccess: false,
                 quote: null
-            }       
+            }     
+        case "ORDER_STOCK": 
+            return {
+                ...state,
+                orderType: action.orderType
+            }
         default: 
             return state
     }
