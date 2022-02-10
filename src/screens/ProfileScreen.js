@@ -128,7 +128,7 @@ export default function ProfileScreen() {
             <CustomText style={{fontSize: 20, color: '#00CB00', marginBottom: 10}}>{formatter.format(totalValue)}</CustomText>
             <View style={{flexDirection: 'row'}}>
               <Ionicons 
-                name={totalValue - profile.initialValue > 0 ? "caret-up" : "caret-down"} 
+                name={totalValue - profile.initialValue > 0 ? "caret-up" : "caret-down"}  
                 size={12} 
                 color={totalValue - profile.initialValue > 0 ? '#00CB00' : '#FF1700'}
                 style={{marginRight: 3}}
