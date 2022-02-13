@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import CustomText from '../components/text';
 import Button from '../components/button';
-import { getStockDataRequest, orderStock } from '../actions/searchActions';
+import { getStockDataRequest } from '../actions/searchActions';
 
 const CANDLE_WIDTH = 10
 const CHART_HEIGHT = Dimensions.get('window').height * 0.4
@@ -38,15 +38,10 @@ export default function stockInfo() {
   const dispatch = useDispatch()
   const resolution = useSelector(state => stock.resolution)
   const [chartType, setChartType] = useState("Candles")
-  const navigation = useNavigation()
+  const navigator = useNavigation()
 
   const CandleChart = useMemo(() => drawChart(stock.stockData, "Candles"), [stock.stockData])
   const LineChart = useMemo(() => drawChart(stock.stockData, "Line"), [stock.stockData])
-
-  useEffect(() => {
-    
-    navigation.navigate("Order")
-  }, [stock.orderType])
 
   function Candle(props) {
     const color = (props.close > props.open ? '#06FF00' : '#FF1700')
@@ -375,7 +370,7 @@ export default function stockInfo() {
                     borderBottomLeftRadius: 10
                   }}
                   onPress={() => {
-                    dispatch(orderStock("Buy"))
+                    navigator.navigate("Selling")
                   }}
                 >
                     <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>SELL</Text>
@@ -393,7 +388,7 @@ export default function stockInfo() {
                     borderBottomRightRadius: 10
                   }}
                   onPress={() => {
-                    dispatch(orderStock("Sell"))                    
+                    navigator.navigate("Buying")            
                   }}
                 >
                   <Text style={{fontWeight: 'bold', color: 'white', fontSize: 14}}>BUY</Text>

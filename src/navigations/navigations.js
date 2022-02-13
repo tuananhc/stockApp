@@ -27,7 +27,8 @@ import CompanyNewsScreen from '../screens/CompanyNewsScreen'
 import CompanyProfileScreen from '../screens/CompanyProfileScreen';
 import CustomTabBar from '../components/CustomTabBar';
 import HistoricalDataScreen from '../screens/HistoricalDataScreen';
-import OrderScreen from '../screens/OrderScreen';
+import BuyingScreen from '../screens/BuyingScreen';
+import SellingScreen from '../screens/SellingScreen';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -190,7 +191,8 @@ export default function Navigations() {
             }}
           />
           <Stack.Screen name="HistoricalData" component={HistoricalDataScreen}/>
-          <Stack.Screen name="Order" component={OrderScreen}/>
+          <Stack.Screen name="Buying" component={BuyingScreen}/>
+          <Stack.Screen name="Selling" component={SellingScreen}/>
         </Stack.Navigator>
       ) : (
         <Stack.Navigator 

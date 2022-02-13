@@ -75,7 +75,7 @@ export default function CompanyNewsScreen() {
   }
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, marginTop: 10}}>
       {news.length === 0 ? (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size="large" color="darkgray" />

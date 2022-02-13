@@ -6,6 +6,7 @@ import signUpSaga from './signUpSaga'
 import searchSaga from './searchSaga'
 import newsSaga from './newsSaga'
 import marketSaga from './marketSaga'
+import orderSaga from './orderSaga'
 
 export default function* rootSaga() {
   yield all ([
@@ -13,6 +14,7 @@ export default function* rootSaga() {
     signUpSaga(),
     searchSaga(),
     newsSaga(),
-    marketSaga()
+    marketSaga(),
+    orderSaga()
   ]);
 }

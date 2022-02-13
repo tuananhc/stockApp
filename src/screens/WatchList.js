@@ -17,6 +17,7 @@ import {capitalizeString} from '../utils/capitalizeString';
 const MONTH = 2629743;
 
 export default function WatchList() {
+  const stock = useSelector(state => state.stock)
   const watchList = useSelector(state => state.profile.watchList);
   const dark = useSelector(state => state.theme);
   const dispatch = useDispatch();
@@ -24,22 +25,19 @@ export default function WatchList() {
   const AnimatedPath = Animated.createAnimatedComponent(Path);
   const [value] = useState(new Animated.Value(0))
 
+  useEffect(() => {
+    if (stock.getDataSuccess) {
+      navigator.navigate("Info")
+    }
+  }, [stock.getDataSuccess])
+
   function renderItem({item}) {
     return (
       <TouchableHighlight
         onPress={() => {
-          var today = Math.floor(Date.now() / 1000);
-          var resolution = 'D';
-          dispatch(
-            getStockDataRequest(
-              item.symbol,
-              item.description,
-              resolution,
-              today - MONTH * 3,
-              today,
-            ),
-          );
-          navigator.navigate('Info');
+          var today = Math.floor(Date.now() / 1000)
+          var resolution = "D"
+          dispatch(getStockDataRequest(item.symbol, item.description, resolution, today - MONTH * 3, today))
         }}
         style={{margin: 3, paddingLeft: 20, paddingRight: 20, padding: 5}}
         underlayColor={dark ? '#7F969C' : '#e6e6e6'}>

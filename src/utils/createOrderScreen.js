@@ -2,19 +2,25 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Keyboard, SafeAreaView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CustomText from '../components/text';
 import Button from '../components/button';
 import CustomTextInput from '../components/textInput';
+import { buyStock, sellStock } from '../actions/orderActions';
 
-export default function OrderScreen() {
+export default function OrderScreen(props) {
   const dark = useSelector(state => state.theme)
   const navigation = useNavigation()
+  const dispatch = useDispatch()
   const stock = useSelector(state => state.stock)
   const [amount, setAmount] = useState(100)
   const [price, setPrice] = useState(stock.quote.c)
-  const [orderType, setOrderType] = useState("Buy")
+  const [orderType, setOrderType] = useState(props.orderType)
+
+  function handleOrder() {
+    dispatch(buyStock(amount, price))
+  }
 
   return (
     <SafeAreaView style={{flex: 1, marginHorizontal: 20}}>
@@ -140,7 +146,7 @@ export default function OrderScreen() {
           </View>
           <View style={{alignItems: 'center'}}>
             <Button
-              onPress={Keyboard.dismiss}
+              onPress={handleOrder}
               style={{
                 marginTop: 30,
                 marginBottom: 10,

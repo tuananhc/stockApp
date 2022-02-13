@@ -9,7 +9,6 @@ const MONTH = 2629743
 const YEAR = 31556926
 
 async function getStockData(symbol, resolution, from, to) {
-  console.log(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=c5nup6iad3icte5l57r0`)
   const response = await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=c5nup6iad3icte5l57r0`)
     .then(function (response) {
       return response
