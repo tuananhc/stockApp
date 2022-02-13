@@ -2,35 +2,30 @@ A stock monitoring app, created by Anh Chau
 
 This app provides the most basic needs of a stock trading/monitoring app UI: current market fluctuations, stock lookup, technical analysis and portfolio management.
 
-![My Image](/src/assets/loginScreen.png#screen)
+<img src="src/assets/loginScreen.png" alt="login" width="300"/>
 
 Login Screen
 
-![My Image](/src/assets/overviewScreen.png#screen)
+<img src="src/assets/overviewScreen.png" alt="login" width="300"/>
 
 Overview Screen
 
-![My Image](/src/assets/analysis.png#screen)
+<img src="src/assets/analysis.png" alt="login" width="300"/>
 
 Technical analysis Screen
 
-![My Image](/src/assets/news.png#screen)
+<img src="src/assets/news.png" alt="login" width="300"/>
 
 Market news screen, consist of news from various sectors: general, crypto, forex, merger
 
-![My Image](/src/assets/portfolio.png#screen)
+<img src="src/assets/portfolio.png" alt="login" width="300"/>
 
 Portfolio management screen
 
-![My Image](/src/assets/dark.png#screen)
+<img src="src/assets/dark.png" alt="login" width="300"/>
 
 Also support dark theme
 
-<style>
-  img[src*="#screen"] {
-    width:300px;
-  }
-</style>
 
 
 Created with React Native.
