@@ -4,4 +4,4 @@ This app provides the most basic needs of a stock trading/monitoring app UI: cur
 
 Created with React Native.
 
-![My Image](/src/assets/loginScreen.jpg)
+![My Image](/src/assets/loginScreen.png)
